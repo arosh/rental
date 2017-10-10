@@ -1,27 +1,64 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateGreeting, updateBlockNumber } from '../reducers';
+import { sendMessage, greet } from '../reducers';
+import Web3Status from './Web3Status';
 
 type PropTypes = {
-  greeting: string,
+  message: string,
   blockNumber: number,
-  setGreeting: string => void,
-  increment: number => void,
+  setMessage: string => void,
+  greet: void => void,
 };
 
 export class AppComponent extends React.Component<PropTypes, {}> {
   render = () => {
-    const { greeting, blockNumber, setGreeting, increment } = this.props;
+    const { message, blockNumber, setMessage, greet } = this.props;
     return (
-      <div>
-        <p>greet() = {greeting}</p>
-        <p>getBlockNumber() = {blockNumber}</p>
-        <input ref="theInput" />
-        <button onClick={() => setGreeting(this.refs.theInput.value)}>
-          setGreeting
-        </button>
-        <button onClick={() => increment(blockNumber + 1)}>+</button>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <Web3Status />
+            <dl className="dl-horizontal">
+              <dt>blockNumber</dt>
+              <dd>{blockNumber}</dd>
+              <dt>message</dt>
+              <dd>{message}</dd>
+            </dl>
+            <form>
+              <div className="form-group">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="message..."
+                  ref="theInput"
+                />
+                <span className="input-group-btn">
+                  <button
+                    className="btn btn-default"
+                    type="button"
+                    onClick={() => {
+                      setMessage(this.refs.theInput.value);
+                      this.refs.theInput.value = '';
+                    }}
+                  >
+                    setMessage
+                  </button>
+                </span>
+              </div>
+              </div>
+              {/* <button
+                type="button"
+                className="btn btn-primary btn-block"
+                onClick={() => greet()}
+              >
+                greet
+              </button> */}
+            </form>
+          </div>
+          <ul />
+        </div>
       </div>
     );
   };
@@ -29,11 +66,11 @@ export class AppComponent extends React.Component<PropTypes, {}> {
 
 export default connect(
   state => ({
-    greeting: state.greeting,
+    message: state.message,
     blockNumber: state.blockNumber,
   }),
   dispatch => ({
-    setGreeting: (value: string) => dispatch(updateGreeting(value)),
-    increment: (value: number) => dispatch(updateBlockNumber(value)),
+    setMessage: (value: string) => dispatch(sendMessage(value)),
+    greet: () => greet(),
   })
 )(AppComponent);

@@ -4,12 +4,25 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import createStore from './store/create';
-import * as web3utils from './web3utils';
+import * as eth from './infra/ethereum';
+import { updateBlockNumber, updateMessage } from './reducers';
 
 const store = createStore();
 
 window.addEventListener('load', function() {
-  web3utils.setupWeb3();
+  eth.setupWeb3();
+
+  eth.setOnGreet(() => {});
+  setInterval(async () => {
+    const blockNumber = await eth.getBlockNumber();
+    if (store.getState().blockNumber !== blockNumber) {
+      store.dispatch(updateBlockNumber(blockNumber));
+    }
+    const message = await eth.getMessage();
+    if (store.getState().message !== message) {
+      store.dispatch(updateMessage(message));
+    }
+  }, 100);
 
   ReactDOM.render(
     <Provider store={store}>

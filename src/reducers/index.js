@@ -1,23 +1,33 @@
 // @flow
+import * as eth from '../infra/ethereum';
+
 type Action = {
   type: string,
   payload: any,
 };
 
 type State = {
-  greeting: string,
+  message: string,
   blockNumber: number,
+  pastMessages: string[],
 };
 
 const initialState: State = {
-  greeting: 'hello, world',
+  message: '',
   blockNumber: 0,
+  pastMessages: [],
 };
 
-export function updateGreeting(greeting: string): Action {
+export function sendMessage(message: string) {
+  return (dispatch: any => void) => {
+    eth.setMessage(message);
+  };
+}
+
+export function updateMessage(message: string): Action {
   return {
-    type: 'greeting/update',
-    payload: greeting,
+    type: 'message/update',
+    payload: message,
   };
 }
 
@@ -28,14 +38,28 @@ export function updateBlockNumber(blockNumber: number): Action {
   };
 }
 
+export function addPastMessages(message: string): Action {
+  return {
+    type: 'pastMessages/add',
+    payload: message,
+  };
+}
+
+export function greet() {
+  eth.greet();
+}
+
 export default (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
   switch (type) {
-    case 'greeting/update': {
-      return { ...state, greeting: payload };
+    case 'message/update': {
+      return { ...state, message: payload };
     }
     case 'blockNumber/update': {
       return { ...state, blockNumber: payload };
+    }
+    case 'pastMessages/add': {
+      return { ...state, pastMessages: [...state.pastMessages, payload] };
     }
     default: {
       return state;

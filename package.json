@@ -13,12 +13,16 @@
   },
   "devDependencies": {
     "flow-bin": "^0.56.0",
+    "gh-pages": "^1.0.0",
     "prettier": "^1.7.4",
     "react-scripts": "1.0.14"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
     "format": "prettier --write \"src/**/*.js\""
-  }
+  },
+  "homepage": "https://arosh.github.io/greeter/"
 }

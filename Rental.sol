@@ -1,13 +1,18 @@
 pragma solidity ^0.4.17;
 
 contract Rental {
+    enum ItemState {
+        Idle, Busy
+    }
+    
     struct Item {
         address owner;
         string name;
+        ItemState state;
     }
     
     enum RequestState {
-        Pending, Canceled, Accepted
+        Pending, Canceled, Accepted, Finished
     }
     
     struct Request {
@@ -33,7 +38,8 @@ contract Rental {
     function addItem(string _name) public returns (uint) {
         Item memory newItem = Item({
           owner: msg.sender,
-          name: _name
+          name: _name,
+          state: ItemState.Idle
         });
         return items.push(newItem) - 1;
     }
@@ -54,8 +60,8 @@ contract Rental {
         Request storage req = requests[_requestId];
         require(req.client == msg.sender);
         require(req.state == RequestState.Pending);
-        msg.sender.transfer(req.fee);
         req.state = RequestState.Canceled;
+        msg.sender.transfer(req.fee);
     }
     
     function acceptRequest(uint _requestId) public {
@@ -63,7 +69,19 @@ contract Rental {
         require(req.state == RequestState.Pending);
         Item storage item = items[req.itemId];
         require(item.owner == msg.sender);
+        require(item.state == ItemState.Idle);
+        item.state = ItemState.Busy;
         req.state = RequestState.Accepted;
         msg.sender.transfer(req.fee);
+    }
+    
+    function acceptReturning(uint _requestId) public {
+        Request storage req = requests[_requestId];
+        require(req.state == RequestState.Accepted);
+        Item storage item = items[req.itemId];
+        require(item.owner == msg.sender);
+        require(item.state == ItemState.Busy);
+        item.state = ItemState.Idle;
+        req.state = RequestState.Finished;
     }
 }

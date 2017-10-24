@@ -99,12 +99,41 @@ export function getInstance() {
   return instance;
 }
 
+function toItemState(state): string {
+  const s = state.toString(10);
+  switch (s) {
+    case '0':
+      return 'idle';
+    case '1':
+     return 'busy';
+    default:
+      throw new Error('Unknown ItemState (state = ' + state + ')');
+  }
+}
+
+function toRequestState(state): string {
+  const s = state.toString(10);
+  switch (s) {
+    case '0':
+      return 'pending';
+    case '1':
+     return 'canceled';
+    case '2':
+     return 'accepted';
+    case '3':
+      return 'finished';
+    default:
+      throw new Error('Unknown RequestState (state = ' + state + ')');
+  }
+}
+
 export function addItem(itemName: string): Promise<number> {
   const instance = getInstance();
   return new Promise((resolve, reject) => {
     instance.addItem(itemName, (err, index) => {
       if (err) {
         reject(err);
+        return;
       }
       resolve(index);
     });
@@ -117,6 +146,7 @@ export function getItemsLength(): Promise<number> {
     instance.getItemsLength((err, length) => {
       if (err) {
         reject(err);
+        return;
       }
       resolve(length);
     });
@@ -129,9 +159,10 @@ export function getItem(index: number): Promise<Item> {
     instance.items(index, (err, item) => {
       if (err) {
         reject(err);
+        return;
       }
-      const state = item[2].toString(10) === '0' ? 'idle' : 'busy';
-      resolve({ index, owner: item[0], name: item[1], state: state });
+      const state = toItemState(item[2]);
+      resolve({ itemId: index, owner: item[0], name: item[1], state: state });
     });
   });
 }
@@ -148,6 +179,23 @@ export function getItems(): Promise<Item[]> {
 
 export function sendRequest(args: RequestArgs) {
   console.log(args);
+  const fee = window.web3.toWei(args.fee, args.unit);
+  const instance = getInstance();
+  return new Promise((resolve, reject) => {
+    instance.addRequest(
+      args.itemId,
+      args.start,
+      args.end,
+      { value: fee },
+      (err, index) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(index);
+      }
+    );
+  });
 }
 
 export function getMessage(): Promise<string> {

@@ -29,6 +29,7 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
       alert('Enter the end date field.');
     }
     this.props.sendRequest({
+      itemId: this.props.item.itemId,
       fee: theFee,
       unit: theUnit,
       start: theStart,
@@ -49,7 +50,7 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
               <div className="form-row">
                 <div className="form-group col-6">
                   <input
-                    type="number"
+                    type="text"
                     className="form-control"
                     placeholder="fee"
                     ref="theFee"
@@ -61,7 +62,7 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
                     defaultValue="eth"
                     ref="theUnit"
                   >
-                    <option value="eth">eth</option>
+                    <option value="ether">ether</option>
                     <option value="gwei">gwei</option>
                     <option value="wei">wei</option>
                   </select>
@@ -106,7 +107,7 @@ export function ItemList(props: ItemListProps) {
       {items
         .filter((item: Item) => item.state === 'idle')
         .map((item: Item) => (
-          <ItemCard key={item.index} item={item} sendRequest={sendRequest} />
+          <ItemCard key={item.itemId} item={item} sendRequest={sendRequest} />
         ))}
     </div>
   );

@@ -1,12 +1,13 @@
 export type Item = {
-  index: number,
+  itemId: number,
   owner: string,
   name: string,
   state: string,
 };
 
 export type RequestArgs = {
-  fee: number,
+  itemId: number,
+  fee: string,
   unit: string,
   start: string,
   end: string,

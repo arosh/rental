@@ -1,12 +1,12 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import type { Item, RequestArgs } from '../types';
+import type { Item, SendRequestArgs } from '../types';
 import { sendRequest } from '../reducers';
 
 type ItemCardProp = {
   item: Item,
-  sendRequest: RequestArgs => void,
+  sendRequest: SendRequestArgs => void,
 };
 
 export class ItemCard extends React.Component<ItemCardProp, {}> {
@@ -97,7 +97,7 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
 
 type ItemListProps = {
   items: Item[],
-  sendRequest: RequestArgs => void,
+  sendRequest: SendRequestArgs => void,
 };
 
 export function ItemList(props: ItemListProps) {
@@ -118,6 +118,6 @@ export default connect(
     items: state.items,
   }),
   dispatch => ({
-    sendRequest: (args: RequestArgs) => dispatch(sendRequest(args)),
+    sendRequest: (args: SendRequestArgs) => dispatch(sendRequest(args)),
   })
 )(ItemList);

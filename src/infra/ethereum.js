@@ -1,5 +1,6 @@
+// @flow
 import * as Web3 from 'web3';
-import type { Item, RequestArgs } from '../types';
+import type { Item, Request, SendRequestArgs } from '../types';
 
 export async function setupWeb3() {
   if (typeof window.web3 !== 'undefined') {
@@ -12,7 +13,7 @@ export async function setupWeb3() {
   await setupDefaultAccount();
 }
 
-export function setupDefaultAccount() {
+export function setupDefaultAccount(): Promise<void> {
   return new Promise((resolve, reject) => {
     window.web3.eth.getAccounts((err, accounts) => {
       if (err) {
@@ -23,14 +24,6 @@ export function setupDefaultAccount() {
       resolve();
     });
   });
-}
-
-export function fromUtf8(str: string) {
-  return window.web3.fromUtf8(str);
-}
-
-export function toUtf8(hex: string) {
-  return window.web3.toUtf8(hex);
 }
 
 // export function getNetwork() {
@@ -105,7 +98,7 @@ function toItemState(state): string {
     case '0':
       return 'idle';
     case '1':
-     return 'busy';
+      return 'busy';
     default:
       throw new Error('Unknown ItemState (state = ' + state + ')');
   }
@@ -117,9 +110,9 @@ function toRequestState(state): string {
     case '0':
       return 'pending';
     case '1':
-     return 'canceled';
+      return 'canceled';
     case '2':
-     return 'accepted';
+      return 'accepted';
     case '3':
       return 'finished';
     default:
@@ -177,16 +170,15 @@ export function getItems(): Promise<Item[]> {
   });
 }
 
-export function sendRequest(args: RequestArgs) {
-  console.log(args);
-  const fee = window.web3.toWei(args.fee, args.unit);
+export function sendRequest(args: SendRequestArgs): Promise<void> {
+  const feeWei = window.web3.toWei(args.fee, args.unit);
   const instance = getInstance();
   return new Promise((resolve, reject) => {
     instance.addRequest(
       args.itemId,
       args.start,
       args.end,
-      { value: fee },
+      { value: feeWei },
       (err, index) => {
         if (err) {
           reject(err);
@@ -198,55 +190,40 @@ export function sendRequest(args: RequestArgs) {
   });
 }
 
-export function getMessage(): Promise<string> {
+export function getRequestsLength(): Promise<number> {
   const instance = getInstance();
   return new Promise((resolve, reject) => {
-    instance.message((err, message) => {
+    instance.getRequestsLength((err, length) => {
       if (err) {
         reject(err);
         return;
       }
-      resolve(message);
+      resolve(length);
     });
   });
 }
 
-export async function setMessage(message: string): Promise<void> {
-  await setupDefaultAccount();
+export function getRequest(index: number): Promise<Request> {
   const instance = getInstance();
   return new Promise((resolve, reject) => {
-    instance.setMessage(message, err => {
+    instance.requests(index, (err, req) => {
       if (err) {
         reject(err);
         return;
       }
+      // const state = toRequestState(item[2]);
+      // resolve({ itemId: index, owner: item[0], name: item[1], state: state });
       resolve();
     });
   });
 }
 
-export async function greet(): Promise<void> {
-  await setupDefaultAccount();
-  const instance = getInstance();
-  return new Promise((resolve, reject) => {
-    instance.greet(err => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve();
-    });
-  });
-}
-
-export async function setOnGreet(callback: any => void) {
-  const instance = getInstance();
-  instance.greetEvent().watch((err, logs) => {
-    if (err) {
-      console.error(err);
-      return;
+export function getRequests(): Promise<Request[]> {
+  return getRequestsLength().then(length => {
+    const p = [];
+    for (let i = 0; i < length; i++) {
+      p.push(getRequest(i));
     }
-    console.log(logs);
-    callback(logs);
+    return Promise.all(p);
   });
 }

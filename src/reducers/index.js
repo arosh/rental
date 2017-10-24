@@ -1,6 +1,6 @@
 // @flow
 import * as eth from '../infra/ethereum';
-import type { Item, RequestArgs } from '../types';
+import type { Item, SendRequestArgs } from '../types';
 
 type Action = {
   type: string,
@@ -21,7 +21,7 @@ export function addItem(itemName: string) {
   };
 }
 
-export function updateItems(items: []): Action {
+export function updateItems(items: Item[]): Action {
   return {
     type: 'items/update',
     payload: {
@@ -30,7 +30,7 @@ export function updateItems(items: []): Action {
   };
 }
 
-export function sendRequest(args: RequestArgs) {
+export function sendRequest(args: SendRequestArgs) {
   return () => {
     eth.sendRequest(args);
   };

@@ -29,7 +29,7 @@ export function updateItems() {
     newItems.reverse();
     if (!deepEqual(items, newItems)) {
       dispatch({
-        type: 'items/update',
+        type: 'SET/items',
         payload: {
           items: newItems,
         },
@@ -47,7 +47,7 @@ export function sendRequest(args: SendRequestArgs) {
 export default (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
   switch (type) {
-    case 'items/update': {
+    case 'SET/items': {
       return {
         ...state,
         items: payload.items,

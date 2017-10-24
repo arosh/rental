@@ -1,6 +1,7 @@
 // @flow
-import * as eth from '../infra/ethereum';
-import type { Item, SendRequestArgs } from '../types';
+import * as eth from './infra/ethereum';
+import * as deepEqual from 'deep-equal';
+import type { Item, SendRequestArgs } from './types';
 
 type Action = {
   type: string,
@@ -21,12 +22,19 @@ export function addItem(itemName: string) {
   };
 }
 
-export function updateItems(items: Item[]): Action {
-  return {
-    type: 'items/update',
-    payload: {
-      items,
-    },
+export function updateItems() {
+  return async (dispatch: Action => void, getState: () => State) => {
+    const { items } = getState();
+    const newItems = await eth.getItems();
+    newItems.reverse();
+    if (!deepEqual(items, newItems)) {
+      dispatch({
+        type: 'items/update',
+        payload: {
+          items: newItems,
+        },
+      });
+    }
   };
 }
 

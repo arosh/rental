@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import type { Item, SendRequestArgs } from '../types';
-import { sendRequest } from '../reducers';
+import { sendRequest } from '../reducer';
 
 type ItemCardProp = {
   item: Item,

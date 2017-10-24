@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { addItem } from '../reducers';
+import { addItem } from '../reducer';
 
 type Props = {
   addItem: (itemName: string) => void,

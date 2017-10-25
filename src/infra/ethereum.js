@@ -98,7 +98,7 @@ const contractABI = [{"constant":true,"inputs":[],"name":"getItemsLength","outpu
 export function getInstance() {
   const web3: Web3 = window.web3;
   const contract = web3.eth.contract(contractABI);
-  const contractAddress = '0x8eBA3C411C05A5D5B462cE4c2B353F5EDa7e89Ad';
+  const contractAddress = '0xa55719276468de68d00ceed39a367bee470d81e2';
   const instance = contract.at(contractAddress);
   return instance;
 }
@@ -272,6 +272,20 @@ export async function cancelRequest(requestId: number): Promise<void> {
   await setupDefaultAccount();
   return new Promise((resolve, reject) => {
     instance.cancelRequest(requestId, (err, index) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve();
+    });
+  });
+}
+
+export async function acceptReturning(requestId: number): Promise<void> {
+  const instance = getInstance();
+  await setupDefaultAccount();
+  return new Promise((resolve, reject) => {
+    instance.acceptReturning(requestId, (err, index) => {
       if (err) {
         reject(err);
         return;

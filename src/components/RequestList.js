@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import {acceptRequest, cancelRequest} from '../reducer';
+import { acceptRequest, cancelRequest } from '../reducer';
 import type { Request } from '../types';
 import type { State } from '../reducer';
 
@@ -74,15 +74,17 @@ export function RequestList({
 }: RequestListProps) {
   return (
     <div className="row">
-      {requests.filter(req => req.state === 'pending').map(req => (
-        <RequestCard
-          key={req.requestId}
-          request={req}
-          account={account}
-          onAccept={onAccept}
-          onCancel={onCancel}
-        />
-      ))}
+      {requests
+        .filter(req => req.state === 'pending')
+        .map(req => (
+          <RequestCard
+            key={req.requestId}
+            request={req}
+            account={account}
+            onAccept={onAccept}
+            onCancel={onCancel}
+          />
+        ))}
     </div>
   );
 }

@@ -1,22 +1,20 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import {acceptRequest, cancelRequest} from '../reducer';
+import { confirmReturn } from '../reducer';
 import type { Request } from '../types';
 import type { State } from '../reducer';
 
 type RequestCardProps = {
   request: Request,
   account: string,
-  onAccept: (requestId: number) => void,
-  onCancel: (requestId: number) => void,
+  onConfirmReturn: (requestId: number) => void,
 };
 
 export function RequestCard({
   request,
   account,
-  onAccept,
-  onCancel,
+  onConfirmReturn,
 }: RequestCardProps) {
   return (
     <div className="col-lg-4 col-md-6 col-xs-12 pb-3">
@@ -39,18 +37,9 @@ export function RequestCard({
             <button
               type="button"
               className="btn btn-outline-success"
-              onClick={() => onAccept(request.requestId)}
+              onClick={() => onConfirmReturn(request.requestId)}
             >
-              Accept
-            </button>
-          )}
-          {request.client === account && (
-            <button
-              type="button"
-              className="btn btn-outline-warning"
-              onClick={() => onCancel(request.requestId)}
-            >
-              Cancel
+              Confirm Return
             </button>
           )}
         </div>
@@ -59,30 +48,29 @@ export function RequestCard({
   );
 }
 
-type RequestListProps = {
+type OnLoanListProps = {
   requests: Request[],
   account: string,
-  onAccept: (requestId: number) => void,
-  onCancel: (requestId: number) => void,
+  onConfirmReturn: (requestId: number) => void,
 };
 
-export function RequestList({
+export function OnLoanList({
   requests,
   account,
-  onAccept,
-  onCancel,
-}: RequestListProps) {
+  onConfirmReturn,
+}: OnLoanListProps) {
   return (
     <div className="row">
-      {requests.filter(req => req.state === 'pending').map(req => (
-        <RequestCard
-          key={req.requestId}
-          request={req}
-          account={account}
-          onAccept={onAccept}
-          onCancel={onCancel}
-        />
-      ))}
+      {requests
+        .filter(req => req.state === 'accepted')
+        .map(req => (
+          <RequestCard
+            key={req.requestId}
+            request={req}
+            account={account}
+            onConfirmReturn={onConfirmReturn}
+          />
+        ))}
     </div>
   );
 }
@@ -93,7 +81,6 @@ export default connect(
     account: state.account,
   }),
   dispatch => ({
-    onAccept: (requestId: number) => dispatch(acceptRequest(requestId)),
-    onCancel: (requestId: number) => dispatch(cancelRequest(requestId)),
+    onConfirmReturn: (requestId: number) => dispatch(confirmReturn(requestId)),
   })
-)(RequestList);
+)(OnLoanList);

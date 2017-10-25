@@ -97,6 +97,12 @@ export function cancelRequest(requestId: number) {
   };
 }
 
+export function confirmReturn(requestId: number) {
+  return () => {
+    eth.acceptReturning(requestId);
+  };
+}
+
 export default (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
   switch (type) {

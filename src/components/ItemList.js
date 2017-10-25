@@ -3,10 +3,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import type { Item, SendRequestArgs } from '../types';
 import { sendRequest } from '../reducer';
+import type { State } from '../reducer';
 
 type ItemCardProp = {
   item: Item,
   sendRequest: SendRequestArgs => void,
+  account: string,
 };
 
 export class ItemCard extends React.Component<ItemCardProp, {}> {
@@ -15,6 +17,10 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
     const theUnit = this.refs.theUnit.value;
     const theStart = this.refs.theStart.value;
     const theEnd = this.refs.theEnd.value;
+    if (this.props.account === this.props.item.owner) {
+      alert('You are an owner of this item.');
+      return;
+    }
     if (theFee === '') {
       alert('Enter the fee field.');
       return;
@@ -98,24 +104,31 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
 type ItemListProps = {
   items: Item[],
   sendRequest: SendRequestArgs => void,
+  account: string,
 };
 
 export function ItemList(props: ItemListProps) {
-  const { items, sendRequest } = props;
+  const { items, sendRequest, account } = props;
   return (
     <div className="row">
       {items
         .filter((item: Item) => item.state === 'idle')
         .map((item: Item) => (
-          <ItemCard key={item.itemId} item={item} sendRequest={sendRequest} />
+          <ItemCard
+            key={item.itemId}
+            item={item}
+            sendRequest={sendRequest}
+            account={account}
+          />
         ))}
     </div>
   );
 }
 
 export default connect(
-  state => ({
+  (state: State) => ({
     items: state.items,
+    account: state.account,
   }),
   dispatch => ({
     sendRequest: (args: SendRequestArgs) => dispatch(sendRequest(args)),

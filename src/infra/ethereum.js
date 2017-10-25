@@ -252,3 +252,31 @@ export function getRequests(): Promise<Request[]> {
     return Promise.all(p);
   });
 }
+
+export async function acceptRequest(requestId: number): Promise<void> {
+  const instance = getInstance();
+  await setupDefaultAccount();
+  return new Promise((resolve, reject) => {
+    instance.acceptRequest(requestId, (err, index) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve();
+    });
+  });
+}
+
+export async function cancelRequest(requestId: number): Promise<void> {
+  const instance = getInstance();
+  await setupDefaultAccount();
+  return new Promise((resolve, reject) => {
+    instance.cancelRequest(requestId, (err, index) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve();
+    });
+  });
+}

@@ -85,6 +85,18 @@ export function sendRequest(args: SendRequestArgs) {
   };
 }
 
+export function acceptRequest(requestId: number) {
+  return () => {
+    eth.acceptRequest(requestId);
+  };
+}
+
+export function cancelRequest(requestId: number) {
+  return () => {
+    eth.cancelRequest(requestId);
+  };
+}
+
 export default (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
   switch (type) {

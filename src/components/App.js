@@ -3,6 +3,7 @@ import React from 'react';
 import AddItemForm from './AddItemForm';
 import ItemList from './ItemList';
 import RequestList from './RequestList';
+import OnLoanList from './OnLoanList';
 import Web3Status from './Web3Status';
 
 const NetworkCard = () => (
@@ -51,6 +52,8 @@ export const AppComponent = () => (
     <ItemList />
     <h3>Requests</h3>
     <RequestList />
+    <h3>On Loan</h3>
+    <OnLoanList />
     <h3>History</h3>
     <div className="row">
       <HistoryItemCard />

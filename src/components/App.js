@@ -3,6 +3,7 @@ import React from 'react';
 import AddItemForm from './AddItemForm';
 import ItemList from './ItemList';
 import RequestList from './RequestList';
+import Web3Status from './Web3Status';
 
 const NetworkCard = () => (
   <form>
@@ -58,6 +59,7 @@ export const AppComponent = () => (
       <HistoryItemCard />
     </div>
     <hr />
+    <Web3Status />
     <NetworkCard />
   </div>
 );

@@ -7,7 +7,7 @@ type RequestCardProps = {
   request: Request,
 };
 
-export function RequestCard({request}: RequestCardProps) {
+export function RequestCard({ request }: RequestCardProps) {
   return (
     <div className="col-lg-4 col-md-6 col-xs-12 pb-3">
       <div className="card">
@@ -15,13 +15,9 @@ export function RequestCard({request}: RequestCardProps) {
           <h4 className="card-title">{request.itemName}</h4>
           <dl className="row">
             <dt className="col-4">Owner</dt>
-            <dd className="col-8">
-              {request.owner}
-            </dd>
+            <dd className="col-8">{request.owner}</dd>
             <dt className="col-4">Client</dt>
-            <dd className="col-8">
-              {request.client}
-            </dd>
+            <dd className="col-8">{request.client}</dd>
             <dt className="col-4">Fee</dt>
             <dd className="col-8">{request.feeEther} </dd>
             <dt className="col-4">Start</dt>

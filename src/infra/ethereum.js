@@ -2,7 +2,7 @@
 import * as Web3 from 'web3';
 import type { Item, Request, SendRequestArgs } from '../types';
 
-export async function setupWeb3() {
+export function setupWeb3() {
   if (typeof window.web3 !== 'undefined') {
     window.web3 = new Web3(window.web3.currentProvider);
   } else {
@@ -10,7 +10,6 @@ export async function setupWeb3() {
       new Web3.providers.HttpProvider('http://localhost:8545')
     );
   }
-  await setupDefaultAccount();
 }
 
 export function setupDefaultAccount(): Promise<void> {
@@ -22,6 +21,18 @@ export function setupDefaultAccount(): Promise<void> {
       }
       window.web3.eth.defaultAccount = accounts[0];
       resolve();
+    });
+  });
+}
+
+export async function getAccount(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    window.web3.eth.getAccounts((err, accounts) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(accounts[0]);
     });
   });
 }
@@ -120,8 +131,9 @@ function toRequestState(state): string {
   }
 }
 
-export function addItem(itemName: string): Promise<number> {
+export async function addItem(itemName: string): Promise<number> {
   const instance = getInstance();
+  await setupDefaultAccount();
   return new Promise((resolve, reject) => {
     instance.addItem(itemName, (err, index) => {
       if (err) {
@@ -170,9 +182,10 @@ export function getItems(): Promise<Item[]> {
   });
 }
 
-export function sendRequest(args: SendRequestArgs): Promise<void> {
-  const feeWei = window.web3.toWei(args.fee, args.unit);
+export async function sendRequest(args: SendRequestArgs): Promise<void> {
   const instance = getInstance();
+  await setupDefaultAccount();
+  const feeWei = window.web3.toWei(args.fee, args.unit);
   return new Promise((resolve, reject) => {
     instance.addRequest(
       args.itemId,
@@ -214,7 +227,7 @@ export function getRequest(index: number): Promise<Request> {
       const itemId = req[1];
       const item = await getItem(itemId);
       const state = toRequestState(req[5]);
-      const feeEther = window.web3.fromWei(req[2], "ether").toString(10);
+      const feeEther = window.web3.fromWei(req[2], 'ether').toString(10);
       resolve({
         requestId: index,
         client: req[0],

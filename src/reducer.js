@@ -10,22 +10,40 @@ type Action = {
 
 type Dispatch = Action => void;
 
-type State = {
+export type State = {
+  account: string,
   items: Item[],
   requests: Request[],
 };
 
 const initialState: State = {
+  account: '',
   items: [],
   requests: [],
 };
 
+const SET_ACCOUNT = 'SET_ACCOUNT';
 const SET_ITEMS = 'SET_ITEMS';
 const SET_REQUESTS = 'SET_REQUESTS';
 
 export function addItem(itemName: string) {
   return () => {
     eth.addItem(itemName);
+  };
+}
+
+export function updateAccount() {
+  return async (dispatch: Dispatch, getState: () => State) => {
+    const { account } = getState();
+    const newAccount = await eth.getAccount();
+    if (account !== newAccount) {
+      dispatch({
+        type: SET_ACCOUNT,
+        payload: {
+          account: newAccount,
+        },
+      });
+    }
   };
 }
 
@@ -70,6 +88,11 @@ export function sendRequest(args: SendRequestArgs) {
 export default (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
   switch (type) {
+    case SET_ACCOUNT:
+      return {
+        ...state,
+        account: payload.account,
+      };
     case SET_ITEMS:
       return {
         ...state,

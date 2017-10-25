@@ -206,14 +206,26 @@ export function getRequestsLength(): Promise<number> {
 export function getRequest(index: number): Promise<Request> {
   const instance = getInstance();
   return new Promise((resolve, reject) => {
-    instance.requests(index, (err, req) => {
+    instance.requests(index, async (err, req) => {
       if (err) {
         reject(err);
         return;
       }
-      // const state = toRequestState(item[2]);
-      // resolve({ itemId: index, owner: item[0], name: item[1], state: state });
-      resolve();
+      const itemId = req[1];
+      const item = await getItem(itemId);
+      const state = toRequestState(req[5]);
+      const feeEther = window.web3.fromWei(req[2], "ether").toString(10);
+      resolve({
+        requestId: index,
+        client: req[0],
+        owner: item.owner,
+        itemId,
+        itemName: item.name,
+        feeEther,
+        start: req[3],
+        end: req[4],
+        state,
+      });
     });
   });
 }

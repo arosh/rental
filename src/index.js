@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import createStore from './createStore';
 import * as eth from './infra/ethereum';
-import { updateItems } from './reducer';
+import { updateItems, updateRequests } from './reducer';
 
 window.addEventListener('load', async function() {
   await eth.setupWeb3();
@@ -13,6 +13,7 @@ window.addEventListener('load', async function() {
   const store = createStore();
   setInterval(async () => {
     store.dispatch(updateItems());
+    store.dispatch(updateRequests());
   }, 1000);
 
   const reactRootEl = document.getElementById('react-root');

@@ -16,8 +16,12 @@ export type SendRequestArgs = {
 
 export type Request = {
   requestId: number,
+  client: string,
+  owner: string,
   itemId: number,
-  feeWei: string,
+  itemName: string,
+  feeEther: string,
   start: string,
   end: string,
+  state: string,
 };

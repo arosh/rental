@@ -1,20 +1,27 @@
 // @flow
 import * as eth from './infra/ethereum';
 import * as deepEqual from 'deep-equal';
-import type { Item, SendRequestArgs } from './types';
+import type { Item, Request, SendRequestArgs } from './types';
 
 type Action = {
   type: string,
   payload: any,
 };
 
+type Dispatch = Action => void;
+
 type State = {
   items: Item[],
+  requests: Request[],
 };
 
 const initialState: State = {
   items: [],
+  requests: [],
 };
+
+const SET_ITEMS = 'SET_ITEMS';
+const SET_REQUESTS = 'SET_REQUESTS';
 
 export function addItem(itemName: string) {
   return () => {
@@ -23,15 +30,31 @@ export function addItem(itemName: string) {
 }
 
 export function updateItems() {
-  return async (dispatch: Action => void, getState: () => State) => {
+  return async (dispatch: Dispatch, getState: () => State) => {
     const { items } = getState();
     const newItems = await eth.getItems();
     newItems.reverse();
     if (!deepEqual(items, newItems)) {
       dispatch({
-        type: 'SET/items',
+        type: SET_ITEMS,
         payload: {
           items: newItems,
+        },
+      });
+    }
+  };
+}
+
+export function updateRequests() {
+  return async (dispatch: Dispatch, getState: () => State) => {
+    const { requests } = getState();
+    const newRequests = await eth.getRequests();
+    newRequests.reverse();
+    if (!deepEqual(requests, newRequests)) {
+      dispatch({
+        type: SET_REQUESTS,
+        payload: {
+          requests: newRequests,
         },
       });
     }
@@ -47,12 +70,16 @@ export function sendRequest(args: SendRequestArgs) {
 export default (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
   switch (type) {
-    case 'SET/items': {
+    case SET_ITEMS:
       return {
         ...state,
         items: payload.items,
       };
-    }
+    case SET_REQUESTS:
+      return {
+        ...state,
+        requests: payload.requests,
+      };
     default: {
       return state;
     }

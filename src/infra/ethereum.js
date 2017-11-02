@@ -25,7 +25,7 @@ export function setupDefaultAccount(): Promise<void> {
   });
 }
 
-export async function getAccount(): Promise<string> {
+export function getAccount(): Promise<string> {
   return new Promise((resolve, reject) => {
     window.web3.eth.getAccounts((err, accounts) => {
       if (err) {
@@ -172,14 +172,13 @@ export function getItem(index: number): Promise<Item> {
   });
 }
 
-export function getItems(): Promise<Item[]> {
-  return getItemsLength().then(length => {
-    const p = [];
-    for (let i = 0; i < length; i++) {
-      p.push(getItem(i));
-    }
-    return Promise.all(p);
-  });
+export async function getItems(): Promise<Item[]> {
+  const length = await getItemsLength();
+  const p = [];
+  for (let i = 0; i < length; i++) {
+    p.push(getItem(i));
+  }
+  return Promise.all(p);
 }
 
 export async function sendRequest(args: SendRequestArgs): Promise<void> {
@@ -243,21 +242,20 @@ export function getRequest(index: number): Promise<Request> {
   });
 }
 
-export function getRequests(): Promise<Request[]> {
-  return getRequestsLength().then(length => {
-    const p = [];
-    for (let i = 0; i < length; i++) {
-      p.push(getRequest(i));
-    }
-    return Promise.all(p);
-  });
+export async function getRequests(): Promise<Request[]> {
+  const length = await getRequestsLength();
+  const p = [];
+  for (let i = 0; i < length; i++) {
+    p.push(getRequest(i));
+  }
+  return Promise.all(p);
 }
 
 export async function acceptRequest(requestId: number): Promise<void> {
   const instance = getInstance();
   await setupDefaultAccount();
   return new Promise((resolve, reject) => {
-    instance.acceptRequest(requestId, (err, index) => {
+    instance.acceptRequest(requestId, (err) => {
       if (err) {
         reject(err);
         return;
@@ -271,7 +269,7 @@ export async function cancelRequest(requestId: number): Promise<void> {
   const instance = getInstance();
   await setupDefaultAccount();
   return new Promise((resolve, reject) => {
-    instance.cancelRequest(requestId, (err, index) => {
+    instance.cancelRequest(requestId, (err) => {
       if (err) {
         reject(err);
         return;
@@ -285,7 +283,7 @@ export async function acceptReturning(requestId: number): Promise<void> {
   const instance = getInstance();
   await setupDefaultAccount();
   return new Promise((resolve, reject) => {
-    instance.acceptReturning(requestId, (err, index) => {
+    instance.acceptReturning(requestId, (err) => {
       if (err) {
         reject(err);
         return;

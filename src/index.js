@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
 import createStore from './createStore';
-import * as eth from './infra/ethereum';
+import { setupWeb3 } from './infra/ethereum';
 import { updateAccount, updateItems, updateRequests } from './reducer';
 
-window.addEventListener('load', async function() {
-  eth.setupWeb3();
+window.addEventListener('load', async () => {
+  setupWeb3();
 
   const store = createStore();
   setInterval(async () => {

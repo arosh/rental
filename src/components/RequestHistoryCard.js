@@ -1,8 +1,6 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 import type { Request } from '../types';
-import type { State } from '../reducer';
 
 function capitalize(s: string) {
   if (s.length === 0) {
@@ -41,20 +39,4 @@ export function RequestHistoryCard({ request }: RequestHistoryCardProps) {
   );
 }
 
-type RequestHistoryProps = {
-  requests: Request[],
-};
-
-export function RequestHistory({ requests }: RequestHistoryProps) {
-  return (
-    <div className="row">
-      {requests
-        .filter(req => req.state === 'canceled' || req.state === 'finished')
-        .map(req => <RequestHistoryCard key={req.requestId} request={req} />)}
-    </div>
-  );
-}
-
-export default connect((state: State) => ({
-  requests: state.requests,
-}))(RequestHistory);
+export default RequestHistoryCard;

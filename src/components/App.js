@@ -4,7 +4,7 @@ import AddItemForm from './AddItemForm';
 import ItemList from './ItemList';
 import RequestList from './RequestList';
 import OnLoanList from './OnLoanList';
-import RequestHistory from './RequestHistory';
+import RequestHistoryList from './RequestHistoryList';
 import Web3Status from './Web3Status';
 
 const NetworkCard = () => (
@@ -31,7 +31,7 @@ export const AppComponent = () => (
     <h3>On Loan</h3>
     <OnLoanList />
     <h3>History</h3>
-    <RequestHistory />
+    <RequestHistoryList />
     <hr />
     <Web3Status />
     <NetworkCard />

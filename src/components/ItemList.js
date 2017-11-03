@@ -12,23 +12,20 @@ type ItemListProps = {
   account: string,
 };
 
-export function ItemList(props: ItemListProps) {
-  const { items, sendRequest, account } = props;
-  return (
-    <div className="row">
-      {items
-        .filter((item: Item) => item.state === 'idle')
-        .map((item: Item) => (
-          <ItemCard
-            key={item.itemId}
-            item={item}
-            sendRequest={sendRequest}
-            account={account}
-          />
-        ))}
-    </div>
-  );
-}
+export const ItemList = (props: ItemListProps) => (
+  <div className="row">
+    {props.items
+      .filter((item: Item) => item.state === 'idle')
+      .map((item: Item) => (
+        <ItemCard
+          key={item.itemId}
+          item={item}
+          sendRequest={props.sendRequest}
+          account={props.account}
+        />
+      ))}
+  </div>
+);
 
 export default connect(
   (state: State) => ({

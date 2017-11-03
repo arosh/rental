@@ -12,43 +12,38 @@ type RequestCardProps = {
   onCancel: (requestId: number) => void,
 };
 
-export function RequestCard({
-  request,
-  account,
-  onAccept,
-  onCancel,
-}: RequestCardProps) {
+export function RequestCard(props: RequestCardProps) {
   return (
     <div className="col-lg-4 col-md-6 col-xs-12 pb-3">
       <div className="card">
         <div className="card-body">
-          <h4 className="card-title">{request.itemName}</h4>
+          <h4 className="card-title">{props.request.itemName}</h4>
           <dl className="row">
             <dt className="col-4">Owner</dt>
-            <dd className="col-8">{request.owner}</dd>
+            <dd className="col-8">{props.request.owner}</dd>
             <dt className="col-4">Client</dt>
-            <dd className="col-8">{request.client}</dd>
+            <dd className="col-8">{props.request.client}</dd>
             <dt className="col-4">Fee</dt>
-            <dd className="col-8">{request.feeEther} </dd>
+            <dd className="col-8">{props.request.feeEther} </dd>
             <dt className="col-4">Start</dt>
-            <dd className="col-8">{request.start}</dd>
+            <dd className="col-8">{props.request.start}</dd>
             <dt className="col-4">End</dt>
-            <dd className="col-8">{request.end}</dd>
+            <dd className="col-8">{props.request.end}</dd>
           </dl>
-          {request.owner === account && (
+          {props.request.owner === props.account && (
             <button
               type="button"
               className="btn btn-outline-success"
-              onClick={() => onAccept(request.requestId)}
+              onClick={() => props.onAccept(props.request.requestId)}
             >
               Accept
             </button>
           )}
-          {request.client === account && (
+          {props.request.client === props.account && (
             <button
               type="button"
               className="btn btn-outline-warning"
-              onClick={() => onCancel(request.requestId)}
+              onClick={() => props.onCancel(props.request.requestId)}
             >
               Cancel
             </button>
@@ -66,28 +61,21 @@ type RequestListProps = {
   onCancel: (requestId: number) => void,
 };
 
-export function RequestList({
-  requests,
-  account,
-  onAccept,
-  onCancel,
-}: RequestListProps) {
-  return (
-    <div className="row">
-      {requests
-        .filter(req => req.state === 'pending')
-        .map(req => (
-          <RequestCard
-            key={req.requestId}
-            request={req}
-            account={account}
-            onAccept={onAccept}
-            onCancel={onCancel}
-          />
-        ))}
-    </div>
-  );
-}
+export const RequestList = (props: RequestListProps) => (
+  <div className="row">
+    {props.requests
+      .filter(req => req.state === 'pending')
+      .map(req => (
+        <RequestCard
+          key={req.requestId}
+          request={req}
+          account={props.account}
+          onAccept={props.onAccept}
+          onCancel={props.onCancel}
+        />
+      ))}
+  </div>
+);
 
 export default connect(
   (state: State) => ({

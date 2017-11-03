@@ -12,26 +12,20 @@ type OnLoanListProps = {
   onConfirmReturn: (requestId: number) => void,
 };
 
-export function OnLoanList({
-  requests,
-  account,
-  onConfirmReturn,
-}: OnLoanListProps) {
-  return (
-    <div className="row">
-      {requests
-        .filter(req => req.state === 'accepted')
-        .map(req => (
-          <OnLoanCard
-            key={req.requestId}
-            request={req}
-            account={account}
-            onConfirmReturn={onConfirmReturn}
-          />
-        ))}
-    </div>
-  );
-}
+export const OnLoanList = (props: OnLoanListProps) => (
+  <div className="row">
+    {props.requests
+      .filter(req => req.state === 'accepted')
+      .map(req => (
+        <OnLoanCard
+          key={req.requestId}
+          request={req}
+          account={props.account}
+          onConfirmReturn={props.onConfirmReturn}
+        />
+      ))}
+  </div>
+);
 
 export default connect(
   (state: State) => ({

@@ -255,7 +255,7 @@ export async function acceptRequest(requestId: number): Promise<void> {
   const instance = getInstance();
   await setupDefaultAccount();
   return new Promise((resolve, reject) => {
-    instance.acceptRequest(requestId, (err) => {
+    instance.acceptRequest(requestId, err => {
       if (err) {
         reject(err);
         return;
@@ -269,7 +269,7 @@ export async function cancelRequest(requestId: number): Promise<void> {
   const instance = getInstance();
   await setupDefaultAccount();
   return new Promise((resolve, reject) => {
-    instance.cancelRequest(requestId, (err) => {
+    instance.cancelRequest(requestId, err => {
       if (err) {
         reject(err);
         return;
@@ -283,7 +283,7 @@ export async function acceptReturning(requestId: number): Promise<void> {
   const instance = getInstance();
   await setupDefaultAccount();
   return new Promise((resolve, reject) => {
-    instance.acceptReturning(requestId, (err) => {
+    instance.acceptReturning(requestId, err => {
       if (err) {
         reject(err);
         return;

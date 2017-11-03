@@ -13,10 +13,10 @@
     "web3": "<1.0.0"
   },
   "devDependencies": {
-    "flow-bin": "^0.57.3",
+    "flow-bin": "^0.58.0",
     "gh-pages": "^1.0.0",
     "prettier": "^1.7.4",
-    "react-scripts": "1.0.14"
+    "react-scripts": "1.0.16"
   },
   "scripts": {
     "start": "react-scripts start",

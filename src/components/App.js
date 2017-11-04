@@ -6,6 +6,7 @@ import RequestList from './RequestList';
 import OnLoanList from './OnLoanList';
 import HistoryList from './HistoryList';
 import Web3Status from './Web3Status';
+import MistBalloon from './MistBalloon';
 
 export const AppComponent = () => (
   <div className="container">
@@ -20,6 +21,7 @@ export const AppComponent = () => (
     <HistoryList />
     <hr />
     <Web3Status />
+    <MistBalloon />
   </div>
 );
 

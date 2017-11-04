@@ -1,0 +1,21 @@
+.mist-balloon {
+  background: #333;
+  color: #FFF;
+  position: fixed;
+  top: 2em;
+  right: 1.5em;
+  padding: 15px 25px;
+  box-shadow: rgba(0,0,0,0.2) 0 2px 8px;    
+}
+
+.mist-balloon:before {
+  display: block;
+  background: #333;
+  transform: rotate(45deg);
+  top: -12px;
+  width: 24px;
+  height: 24px;
+  content: " ";
+  position: absolute;
+  left: 270px;
+}

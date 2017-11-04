@@ -24,24 +24,7 @@ export async function getAccount(): Promise<string> {
         resolve(account);
         return;
       }
-      if (typeof window.mist !== 'undefined') {
-        const account = await requestAccountForMist();
-        resolve(account);
-        return;
-      }
       resolve('');
-    });
-  });
-}
-
-async function requestAccountForMist(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    window.mist.requestAccount((err, account) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(account);
     });
   });
 }

@@ -7,6 +7,7 @@ import OnLoanList from './OnLoanList';
 import HistoryList from './HistoryList';
 import Web3Status from './Web3Status';
 import MistBalloon from './MistBalloon';
+import ContractDialog from './ContractDialog';
 
 export const AppComponent = () => (
   <div className="container">
@@ -22,6 +23,7 @@ export const AppComponent = () => (
     <hr />
     <Web3Status />
     <MistBalloon />
+    <ContractDialog />
   </div>
 );
 

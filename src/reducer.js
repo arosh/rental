@@ -16,6 +16,7 @@ export type State = {
   account: string,
   items: Item[],
   requests: Request[],
+  contractAddressDialogOpen: boolean,
 };
 
 const initialState: State = {
@@ -24,6 +25,7 @@ const initialState: State = {
   account: '',
   items: [],
   requests: [],
+  contractAddressDialogOpen: false,
 };
 
 const SET_NETWORK = 'SET_NETWORK';
@@ -31,6 +33,7 @@ const SET_CONTRACT_ADDRESS = 'SET_CONTRACT_ADDRESS';
 const SET_ACCOUNT = 'SET_ACCOUNT';
 const SET_ITEMS = 'SET_ITEMS';
 const SET_REQUESTS = 'SET_REQUESTS';
+const SET_CONTRACT_ADDRESS_DIALOG_OPEN = 'SET_CONTRACT_ADDRESS_DIALOG_OPEN';
 
 export function updateNetwork() {
   return async (dispatch: Dispatch, getState: () => State) => {
@@ -147,6 +150,15 @@ export function confirmReturn(requestId: number) {
   };
 }
 
+export function toggleContractAddressDialog(open: boolean): Action {
+  return {
+    type: SET_CONTRACT_ADDRESS_DIALOG_OPEN,
+    payload: {
+      open,
+    },
+  };
+}
+
 export default (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
   switch (type) {
@@ -174,6 +186,11 @@ export default (state: State = initialState, action: Action): State => {
       return {
         ...state,
         requests: payload.requests,
+      };
+    case SET_CONTRACT_ADDRESS_DIALOG_OPEN:
+      return {
+        ...state,
+        contractAddressDialogOpen: payload.open,
       };
     default: {
       return state;

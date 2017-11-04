@@ -11,7 +11,7 @@ type Props = {
 const MistBalloonComponent = (props: Props) => (
   <div
     className="mist-balloon"
-    style={{ display: props.display ?  'block' : 'none' }}
+    style={{ display: props.display ? 'block' : 'none' }}
   >
     Click here to add an account on Mist
   </div>

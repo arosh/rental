@@ -13,13 +13,10 @@ type State = {
 };
 
 export class AddItemForm extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      name: '',
-      serialNumber: '',
-    };
-  }
+  state = {
+    name: '',
+    serialNumber: '',
+  };
   handleClick = () => {
     this.props.addItem(this.state.name, this.state.serialNumber);
     this.setState({

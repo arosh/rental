@@ -3,8 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {
   updateNetwork,
-  updateContractAddress,
   updateAccount,
+  toggleContractAddressDialog,
 } from '../reducer';
 import type { State } from '../reducer';
 
@@ -13,7 +13,7 @@ type Web3StatusProps = {
   account: string,
   contractAddress: string,
   updateNetwork: () => void,
-  updateContractAddress: (currentAddress: string) => void,
+  updateContractAddress: () => void,
   updateAccount: () => void,
 };
 
@@ -39,7 +39,7 @@ export function Web3Status(props: Web3StatusProps) {
         <dt>
           Contract Address (<a
             tabIndex={0}
-            onClick={() => props.updateContractAddress(props.contractAddress)}
+            onClick={() => props.updateContractAddress()}
           >
             Change
           </a>)
@@ -62,11 +62,8 @@ export default connect(
   }),
   dispatch => ({
     updateNetwork: () => dispatch(updateNetwork()),
-    updateContractAddress: (currentAddress: string) => {
-      const newAddress = prompt('Enter contract address.', currentAddress);
-      if (newAddress) {
-        dispatch(updateContractAddress(newAddress));
-      }
+    updateContractAddress: () => {
+      dispatch(toggleContractAddressDialog(true));
     },
     updateAccount: () => dispatch(updateAccount()),
   })

@@ -2,6 +2,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import App from './components/App';
 import createStore from './createStore';
 import { setupWeb3 } from './infra/ethereum';
@@ -11,6 +15,8 @@ import {
   updateItems,
   updateRequests,
 } from './reducer';
+
+const muiTheme = getMuiTheme();
 
 // Generally, 'DOMContentLoaded' is preferable,
 // but in this case 'load' may be preferable
@@ -26,13 +32,15 @@ window.addEventListener('load', async () => {
   setInterval(async () => {
     store.dispatch(updateItems());
     store.dispatch(updateRequests());
-  }, 3000);
+  }, 2000);
 
   const reactRootEl = document.getElementById('react-root');
   if (reactRootEl) {
     ReactDOM.render(
       <Provider store={store}>
-        <App />
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <App />
+        </MuiThemeProvider>
       </Provider>,
       reactRootEl
     );

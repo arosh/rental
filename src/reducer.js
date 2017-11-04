@@ -8,10 +8,11 @@ type Action = {
   payload: any,
 };
 
-type Dispatch = Action => void;
+type Dispatch = (Action | (Dispatch => void)) => void;
 
 export type State = {
   network: string,
+  contractAddress: string,
   account: string,
   items: Item[],
   requests: Request[],
@@ -19,12 +20,14 @@ export type State = {
 
 const initialState: State = {
   network: '',
+  contractAddress: '',
   account: '',
   items: [],
   requests: [],
 };
 
 const SET_NETWORK = 'SET_NETWORK';
+const SET_CONTRACT_ADDRESS = 'SET_CONTRACT_ADDRESS';
 const SET_ACCOUNT = 'SET_ACCOUNT';
 const SET_ITEMS = 'SET_ITEMS';
 const SET_REQUESTS = 'SET_REQUESTS';
@@ -40,7 +43,25 @@ export function updateNetwork() {
           network: newNetwork,
         },
       });
+      dispatch(setDefaultContractAddress());
     }
+  };
+}
+
+export function setDefaultContractAddress() {
+  return (dispatch: Dispatch) => {
+    eth.getDefaultContractAddress().then(contractAddress => {
+      dispatch(updateContractAddress(contractAddress));
+    });
+  };
+}
+
+export function updateContractAddress(contractAddress: string) {
+  return {
+    type: SET_CONTRACT_ADDRESS,
+    payload: {
+      contractAddress,
+    },
   };
 }
 
@@ -61,8 +82,8 @@ export function updateAccount() {
 
 export function updateItems() {
   return async (dispatch: Dispatch, getState: () => State) => {
-    const { items } = getState();
-    const newItems = await eth.getItems();
+    const { contractAddress, items } = getState();
+    const newItems = await eth.getItems(contractAddress);
     newItems.reverse();
     if (!deepEqual(items, newItems)) {
       dispatch({
@@ -77,15 +98,15 @@ export function updateItems() {
 
 export function addItem(itemName: string, serialNumber: string) {
   return (dispatch: Dispatch, getState: () => State) => {
-    const { account } = getState();
-    eth.addItem(account, itemName, serialNumber);
+    const { contractAddress, account } = getState();
+    eth.addItem(contractAddress, account, itemName, serialNumber);
   };
 }
 
 export function updateRequests() {
   return async (dispatch: Dispatch, getState: () => State) => {
-    const { requests } = getState();
-    const newRequests = await eth.getRequests();
+    const { contractAddress, requests } = getState();
+    const newRequests = await eth.getRequests(contractAddress);
     newRequests.reverse();
     if (!deepEqual(requests, newRequests)) {
       dispatch({
@@ -100,29 +121,29 @@ export function updateRequests() {
 
 export function sendRequest(args: SendRequestArgs) {
   return (dispatch: Dispatch, getState: () => State) => {
-    const { account } = getState();
-    eth.sendRequest(account, args);
+    const { contractAddress, account } = getState();
+    eth.sendRequest(contractAddress, account, args);
   };
 }
 
 export function acceptRequest(requestId: number) {
   return (dispatch: Dispatch, getState: () => State) => {
-    const { account } = getState();
-    eth.acceptRequest(account, requestId);
+    const { contractAddress, account } = getState();
+    eth.acceptRequest(contractAddress, account, requestId);
   };
 }
 
 export function cancelRequest(requestId: number) {
   return (dispatch: Dispatch, getState: () => State) => {
-    const { account } = getState();
-    eth.cancelRequest(account, requestId);
+    const { contractAddress, account } = getState();
+    eth.cancelRequest(contractAddress, account, requestId);
   };
 }
 
 export function confirmReturn(requestId: number) {
   return (dispatch: Dispatch, getState: () => State) => {
-    const { account } = getState();
-    eth.acceptReturning(account, requestId);
+    const { contractAddress, account } = getState();
+    eth.acceptReturning(contractAddress, account, requestId);
   };
 }
 
@@ -133,6 +154,11 @@ export default (state: State = initialState, action: Action): State => {
       return {
         ...state,
         network: payload.network,
+      };
+    case SET_CONTRACT_ADDRESS:
+      return {
+        ...state,
+        contractAddress: payload.contractAddress,
       };
     case SET_ACCOUNT:
       return {

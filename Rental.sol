@@ -8,6 +8,7 @@ contract Rental {
     struct Item {
         address owner;
         string name;
+        string serialNumber;
         ItemState state;
     }
     
@@ -35,10 +36,11 @@ contract Rental {
         return requests.length;
     }
     
-    function addItem(string _name) public returns (uint) {
+    function addItem(string _name, string _serialNumber) public returns (uint) {
         Item memory newItem = Item({
           owner: msg.sender,
           name: _name,
+          serialNumber: _serialNumber,
           state: ItemState.Idle
         });
         return items.push(newItem) - 1;

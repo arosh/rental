@@ -15,7 +15,7 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
     const theStart = this.refs.theStart.value;
     const theEnd = this.refs.theEnd.value;
     if (this.props.account === this.props.item.owner) {
-      alert('You are an owner of this item.');
+      alert('This is your item.');
       return;
     }
     if (theFee === '') {
@@ -46,9 +46,12 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
         <div className="card">
           <div className="card-body">
             <h4 className="card-title">{item.name}</h4>
-            <h6 className="card-subtitle mb-2 text-muted">
-              Owner: {item.owner}
-            </h6>
+            <dl>
+              <dt>Owner</dt>
+              <dd>{item.owner}</dd>
+              <dt>S/N</dt>
+              <dd>{item.serialNumber}</dd>
+            </dl>
             <form>
               <div className="form-row">
                 <div className="form-group col-6">

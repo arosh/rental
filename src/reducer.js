@@ -11,24 +11,36 @@ type Action = {
 type Dispatch = Action => void;
 
 export type State = {
+  network: string,
   account: string,
   items: Item[],
   requests: Request[],
 };
 
 const initialState: State = {
+  network: '',
   account: '',
   items: [],
   requests: [],
 };
 
+const SET_NETWORK = 'SET_NETWORK';
 const SET_ACCOUNT = 'SET_ACCOUNT';
 const SET_ITEMS = 'SET_ITEMS';
 const SET_REQUESTS = 'SET_REQUESTS';
 
-export function addItem(itemName: string) {
-  return () => {
-    eth.addItem(itemName);
+export function updateNetwork() {
+  return async (dispatch: Dispatch, getState: () => State) => {
+    const { network } = getState();
+    const newNetwork = await eth.getNetwork();
+    if (network !== newNetwork) {
+      dispatch({
+        type: SET_NETWORK,
+        payload: {
+          network: newNetwork,
+        },
+      });
+    }
   };
 }
 
@@ -63,6 +75,13 @@ export function updateItems() {
   };
 }
 
+export function addItem(itemName: string, serialNumber: string) {
+  return (dispatch: Dispatch, getState: () => State) => {
+    const { account } = getState();
+    eth.addItem(account, itemName, serialNumber);
+  };
+}
+
 export function updateRequests() {
   return async (dispatch: Dispatch, getState: () => State) => {
     const { requests } = getState();
@@ -80,32 +99,41 @@ export function updateRequests() {
 }
 
 export function sendRequest(args: SendRequestArgs) {
-  return () => {
-    eth.sendRequest(args);
+  return (dispatch: Dispatch, getState: () => State) => {
+    const { account } = getState();
+    eth.sendRequest(account, args);
   };
 }
 
 export function acceptRequest(requestId: number) {
-  return () => {
-    eth.acceptRequest(requestId);
+  return (dispatch: Dispatch, getState: () => State) => {
+    const { account } = getState();
+    eth.acceptRequest(account, requestId);
   };
 }
 
 export function cancelRequest(requestId: number) {
-  return () => {
-    eth.cancelRequest(requestId);
+  return (dispatch: Dispatch, getState: () => State) => {
+    const { account } = getState();
+    eth.cancelRequest(account, requestId);
   };
 }
 
 export function confirmReturn(requestId: number) {
-  return () => {
-    eth.acceptReturning(requestId);
+  return (dispatch: Dispatch, getState: () => State) => {
+    const { account } = getState();
+    eth.acceptReturning(account, requestId);
   };
 }
 
 export default (state: State = initialState, action: Action): State => {
   const { type, payload } = action;
   switch (type) {
+    case SET_NETWORK:
+      return {
+        ...state,
+        network: payload.network,
+      };
     case SET_ACCOUNT:
       return {
         ...state,

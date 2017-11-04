@@ -4,29 +4,27 @@ import { connect } from 'react-redux';
 import { addItem } from '../reducer';
 
 type Props = {
-  addItem: (itemName: string) => void,
+  addItem: (itemName: string, serialNumber: string) => void,
 };
 
 type State = {
-  theInput: string,
+  name: string,
+  serialNumber: string,
 };
 
 export class AddItemForm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      theInput: '',
+      name: '',
+      serialNumber: '',
     };
   }
-  handleChange = (input: any) => {
-    this.setState({
-      theInput: input.target.value,
-    });
-  };
   handleClick = () => {
-    this.props.addItem(this.state.theInput);
+    this.props.addItem(this.state.name, this.state.serialNumber);
     this.setState({
-      theInput: '',
+      name: '',
+      serialNumber: '',
     });
   };
   render = () => (
@@ -36,9 +34,18 @@ export class AddItemForm extends React.Component<Props, State> {
           <input
             type="text"
             className="form-control"
-            placeholder="Enter item name"
-            value={this.state.theInput}
-            onChange={this.handleChange}
+            placeholder="Name"
+            value={this.state.name}
+            onChange={ev => this.setState({ name: ev.target.value })}
+          />
+        </div>
+        <div className="form-group col">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="S/N"
+            value={this.state.serialNumber}
+            onChange={ev => this.setState({ serialNumber: ev.target.value })}
           />
         </div>
         <div className="form-group col">
@@ -46,7 +53,7 @@ export class AddItemForm extends React.Component<Props, State> {
             type="button"
             className="btn btn-primary"
             onClick={this.handleClick}
-            disabled={this.state.theInput.length === 0}
+            disabled={this.state.name.length === 0}
           >
             Add item
           </button>
@@ -57,5 +64,6 @@ export class AddItemForm extends React.Component<Props, State> {
 }
 
 export default connect(null, dispatch => ({
-  addItem: (itemName: string) => dispatch(addItem(itemName)),
+  addItem: (itemName: string, serialNumber) =>
+    dispatch(addItem(itemName, serialNumber)),
 }))(AddItemForm);

@@ -3,6 +3,7 @@ export type Item = {
   itemId: number,
   owner: string,
   name: string,
+  serialNumber: string,
   state: string,
 };
 
@@ -20,6 +21,7 @@ export type Request = {
   owner: string,
   itemId: number,
   itemName: string,
+  serialNumber: string,
   feeEther: string,
   start: string,
   end: string,

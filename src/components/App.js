@@ -4,22 +4,8 @@ import AddItemForm from './AddItemForm';
 import ItemList from './ItemList';
 import RequestList from './RequestList';
 import OnLoanList from './OnLoanList';
-import RequestHistoryList from './RequestHistoryList';
+import HistoryList from './HistoryList';
 import Web3Status from './Web3Status';
-
-const NetworkCard = () => (
-  <form>
-    <div className="form-group">
-      <select className="form-control">
-        <option>Main Ethereum Network</option>
-        <option>Ropsten Test Network</option>
-        <option>Kovan Test Network</option>
-        <option>Rinkeby Test Network</option>
-        <option>Localhost 8545</option>
-      </select>
-    </div>
-  </form>
-);
 
 export const AppComponent = () => (
   <div className="container">
@@ -31,10 +17,9 @@ export const AppComponent = () => (
     <h3>On Loan</h3>
     <OnLoanList />
     <h3>History</h3>
-    <RequestHistoryList />
+    <HistoryList />
     <hr />
     <Web3Status />
-    <NetworkCard />
   </div>
 );
 

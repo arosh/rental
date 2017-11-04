@@ -18,17 +18,19 @@ export function OnLoanCard({
       <div className="card">
         <div className="card-body">
           <h4 className="card-title">{request.itemName}</h4>
-          <dl className="row">
-            <dt className="col-4">Owner</dt>
-            <dd className="col-8">{request.owner}</dd>
-            <dt className="col-4">Client</dt>
-            <dd className="col-8">{request.client}</dd>
-            <dt className="col-4">Fee</dt>
-            <dd className="col-8">{request.feeEther} </dd>
-            <dt className="col-4">Start</dt>
-            <dd className="col-8">{request.start}</dd>
-            <dt className="col-4">End</dt>
-            <dd className="col-8">{request.end}</dd>
+          <dl>
+            <dt>Owner</dt>
+            <dd>{request.owner}</dd>
+            <dt>Client</dt>
+            <dd>{request.client}</dd>
+            <dt>S/N</dt>
+            <dd>{request.serialNumber}</dd>
+            <dt>Fee</dt>
+            <dd>{request.feeEther} </dd>
+            <dt>Start</dt>
+            <dd>{request.start}</dd>
+            <dt>End</dt>
+            <dd>{request.end}</dd>
           </dl>
           {request.owner === account && (
             <button

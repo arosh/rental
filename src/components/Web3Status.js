@@ -18,12 +18,13 @@ type Web3StatusProps = {
 };
 
 export function Web3Status(props: Web3StatusProps) {
-  const { web3 } = window;
   return (
     <div>
       <dl className="dl-horizontal">
         <dt>Web3 Status</dt>
-        <dd>{web3 !== undefined ? 'Available' : 'Not Available'}</dd>
+        <dd>
+          {typeof window.web3 !== 'undefined' ? 'Available' : 'Not Available'}
+        </dd>
         <dt>
           Account (<a tabIndex={0} onClick={props.updateAccount}>
             Reload

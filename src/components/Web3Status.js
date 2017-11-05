@@ -23,7 +23,7 @@ export function Web3Status(props: Web3StatusProps) {
     <div>
       <dl className="dl-horizontal">
         <dt>Web3 Status</dt>
-        <dd>{web3 !== undefined ? 'Available' : 'Not Available'}</dd>
+        <dd>{web3.isConnected() ? 'Available' : 'Not Available'}</dd>
         <dt>
           Account (<a tabIndex={0} onClick={props.updateAccount}>
             Reload

@@ -8,6 +8,12 @@ import {
 } from '../reducer';
 import type { State } from '../reducer';
 
+const styles = {
+  pointer: {
+    cursor: 'pointer',
+  },
+};
+
 type Web3StatusProps = {
   network: string,
   account: string,
@@ -25,13 +31,21 @@ export function Web3Status(props: Web3StatusProps) {
         <dt>Web3 Status</dt>
         <dd>{web3.isConnected() ? 'Available' : 'Not Available'}</dd>
         <dt>
-          Account (<a tabIndex={0} onClick={props.updateAccount}>
+          Account (<a
+            tabIndex={0}
+            onClick={props.updateAccount}
+            style={styles.pointer}
+          >
             Reload
           </a>)
         </dt>
         <dd>{props.account !== '' ? props.account : 'Not Available'}</dd>
         <dt>
-          Network (<a tabIndex={0} onClick={props.updateNetwork}>
+          Network (<a
+            tabIndex={0}
+            onClick={props.updateNetwork}
+            style={styles.pointer}
+          >
             Reload
           </a>)
         </dt>
@@ -40,6 +54,7 @@ export function Web3Status(props: Web3StatusProps) {
           Contract Address (<a
             tabIndex={0}
             onClick={() => props.updateContractAddress()}
+            style={styles.pointer}
           >
             Change
           </a>)

@@ -1,8 +1,10 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
-import { confirmReturn } from '../reducer';
+
 import OnLoanCard from './OnLoanCard';
+import { confirmReturn } from '../reducer';
+
 import type { Request } from '../types';
 import type { State } from '../reducer';
 
@@ -12,20 +14,24 @@ type OnLoanListProps = {
   onConfirmReturn: (requestId: number) => void,
 };
 
-export const OnLoanList = (props: OnLoanListProps) => (
-  <div className="row">
-    {props.requests
-      .filter(req => req.state === 'accepted')
-      .map(req => (
-        <OnLoanCard
-          key={req.requestId}
-          request={req}
-          account={props.account}
-          onConfirmReturn={props.onConfirmReturn}
-        />
-      ))}
-  </div>
-);
+export const OnLoanList = (props: OnLoanListProps) => {
+  const rows = props.requests.filter(req => req.state === 'accepted');
+  return (
+    <div>
+      <h3 hidden={rows.length === 0}>On Loan</h3>
+      <div className="row">
+        {rows.map(req => (
+          <OnLoanCard
+            key={req.requestId}
+            request={req}
+            account={props.account}
+            onConfirmReturn={props.onConfirmReturn}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default connect(
   (state: State) => ({

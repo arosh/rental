@@ -14,11 +14,8 @@ export const AppComponent = () => (
     <h3>Items</h3>
     <AddItemForm />
     <ItemList />
-    <h3>Requests</h3>
     <RequestList />
-    <h3>On Loan</h3>
     <OnLoanList />
-    <h3>History</h3>
     <HistoryList />
     <hr />
     <Web3Status />

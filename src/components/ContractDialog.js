@@ -9,6 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 import { toggleContractAddressDialog } from '../reducer';
+import { isAddress } from '../infra/ethereum';
 import type { State } from '../reducer';
 
 type InputProps = {
@@ -22,7 +23,7 @@ class Input extends React.Component<InputProps, {}> {
   }
   render = () => (
     <TextField
-      hintText="Enter the contract address."
+      hintText="0x0123456789abcdef0123456789abcdef01234567"
       fullWidth={true}
       value={this.props.contractAddress}
       ref="theInput"
@@ -67,7 +68,7 @@ class ContractDialog extends React.Component<
         label="Submit"
         primary={true}
         onClick={this.onClick}
-        disabled={this.state.contractAddress.length === 0}
+        disabled={!isAddress(this.state.contractAddress)}
       />,
     ];
 

@@ -2,8 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  updateNetwork,
-  updateAccount,
+  syncNetworkName,
+  syncAccountAddress,
   toggleContractAddressDialog,
 } from '../reducer';
 import type { State } from '../reducer';
@@ -18,9 +18,9 @@ type Web3StatusProps = {
   network: string,
   account: string,
   contractAddress: string,
-  updateNetwork: () => void,
-  updateContractAddress: () => void,
-  updateAccount: () => void,
+  syncNetworkName: () => void,
+  openContractAddressDialog: () => void,
+  syncAccountAddress: () => void,
 };
 
 export function Web3Status(props: Web3StatusProps) {
@@ -33,7 +33,7 @@ export function Web3Status(props: Web3StatusProps) {
         <dt>
           Account (<a
             tabIndex={0}
-            onClick={props.updateAccount}
+            onClick={props.syncAccountAddress}
             style={styles.pointer}
           >
             Reload
@@ -43,7 +43,7 @@ export function Web3Status(props: Web3StatusProps) {
         <dt>
           Network (<a
             tabIndex={0}
-            onClick={props.updateNetwork}
+            onClick={props.syncNetworkName}
             style={styles.pointer}
           >
             Reload
@@ -53,7 +53,7 @@ export function Web3Status(props: Web3StatusProps) {
         <dt>
           Contract Address (<a
             tabIndex={0}
-            onClick={() => props.updateContractAddress()}
+            onClick={() => props.openContractAddressDialog()}
             style={styles.pointer}
           >
             Change
@@ -76,10 +76,10 @@ export default connect(
     account: state.account,
   }),
   dispatch => ({
-    updateNetwork: () => dispatch(updateNetwork()),
-    updateContractAddress: () => {
+    syncNetworkName: () => dispatch(syncNetworkName()),
+    openContractAddressDialog: () => {
       dispatch(toggleContractAddressDialog(true));
     },
-    updateAccount: () => dispatch(updateAccount()),
+    syncAccountAddress: () => dispatch(syncAccountAddress()),
   })
 )(Web3Status);

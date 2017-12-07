@@ -1,12 +1,14 @@
 // @flow
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-import { updateContractAddress, toggleContractAddressDialog } from '../reducer';
+import { toggleContractAddressDialog } from '../reducer';
 import type { State } from '../reducer';
 
 type InputProps = {
@@ -32,7 +34,7 @@ class Input extends React.Component<InputProps, {}> {
 type ContractDialogProps = {
   open: boolean,
   onSubmit: (contractAddress: string) => void,
-  handleClose: () => void,
+  closeDialog: () => void,
 };
 
 type ContractDialogState = {
@@ -59,7 +61,7 @@ class ContractDialog extends React.Component<
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={this.props.handleClose}
+        onClick={this.props.closeDialog}
       />,
       <FlatButton
         label="Submit"
@@ -85,17 +87,25 @@ class ContractDialog extends React.Component<
   };
 }
 
-export default connect(
-  (state: State) => ({
-    open: state.contractAddressDialogOpen,
-  }),
-  dispatch => ({
-    onSubmit: (contractAddress: string) => {
-      dispatch(updateContractAddress(contractAddress));
-      dispatch(toggleContractAddressDialog(false));
-    },
-    handleClose: () => {
-      dispatch(toggleContractAddressDialog(false));
-    },
-  })
+export default compose(
+  withRouter,
+  connect(
+    (state: State) => ({
+      open: state.contractAddressDialogOpen,
+    }),
+    (dispatch, ownProps) => ({
+      onSubmit: (contractAddress: string) => {
+        const { location, history } = ownProps;
+        const params = new URLSearchParams(location.search);
+        params.set('addr', contractAddress);
+        history.push({
+          search: params.toString(),
+        });
+        dispatch(toggleContractAddressDialog(false));
+      },
+      closeDialog: () => {
+        dispatch(toggleContractAddressDialog(false));
+      },
+    })
+  )
 )(ContractDialog);

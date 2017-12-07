@@ -35,10 +35,13 @@ const SET_ITEMS = 'SET_ITEMS';
 const SET_REQUESTS = 'SET_REQUESTS';
 const SET_CONTRACT_ADDRESS_DIALOG_OPEN = 'SET_CONTRACT_ADDRESS_DIALOG_OPEN';
 
-export function updateNetwork() {
+/**
+ * Ethereumのネットワーク名をWeb3から読み取ってstateに反映する
+ */
+export function syncNetworkName() {
   return async (dispatch: Dispatch, getState: () => State) => {
-    const { network } = getState();
     const newNetwork = await eth.getNetwork();
+    const { network } = getState();
     if (network !== newNetwork) {
       dispatch({
         type: SET_NETWORK,
@@ -46,20 +49,11 @@ export function updateNetwork() {
           network: newNetwork,
         },
       });
-      dispatch(setDefaultContractAddress());
     }
   };
 }
 
-export function setDefaultContractAddress() {
-  return (dispatch: Dispatch) => {
-    eth.getDefaultContractAddress().then(contractAddress => {
-      dispatch(updateContractAddress(contractAddress));
-    });
-  };
-}
-
-export function updateContractAddress(contractAddress: string) {
+export function setContractAddress(contractAddress: string) {
   return {
     type: SET_CONTRACT_ADDRESS,
     payload: {
@@ -68,10 +62,10 @@ export function updateContractAddress(contractAddress: string) {
   };
 }
 
-export function updateAccount() {
+export function syncAccountAddress() {
   return async (dispatch: Dispatch, getState: () => State) => {
-    const { account } = getState();
     const newAccount = await eth.getAccount();
+    const { account } = getState();
     if (account !== newAccount) {
       dispatch({
         type: SET_ACCOUNT,
@@ -83,11 +77,12 @@ export function updateAccount() {
   };
 }
 
-export function updateItems() {
+export function syncItems() {
   return async (dispatch: Dispatch, getState: () => State) => {
-    const { contractAddress, items } = getState();
+    const { contractAddress } = getState();
     const newItems = await eth.getItems(contractAddress);
     newItems.reverse();
+    const { items } = getState();
     if (!deepEqual(items, newItems)) {
       dispatch({
         type: SET_ITEMS,
@@ -106,11 +101,12 @@ export function addItem(itemName: string, serialNumber: string) {
   };
 }
 
-export function updateRequests() {
+export function syncRequests() {
   return async (dispatch: Dispatch, getState: () => State) => {
-    const { contractAddress, requests } = getState();
+    const { contractAddress } = getState();
     const newRequests = await eth.getRequests(contractAddress);
     newRequests.reverse();
+    const { requests } = getState();
     if (!deepEqual(requests, newRequests)) {
       dispatch({
         type: SET_REQUESTS,

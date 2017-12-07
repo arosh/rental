@@ -10,10 +10,10 @@ import App from './components/App';
 import createStore from './createStore';
 import { setupWeb3 } from './infra/ethereum';
 import {
-  updateNetwork,
-  updateAccount,
-  updateItems,
-  updateRequests,
+  syncNetworkName,
+  syncAccountAddress,
+  syncItems,
+  syncRequests,
 } from './reducer';
 
 const muiTheme = getMuiTheme();
@@ -26,12 +26,12 @@ window.addEventListener('load', async () => {
   setupWeb3();
 
   const store = createStore();
-  store.dispatch(updateNetwork());
-  store.dispatch(updateAccount());
+  store.dispatch(syncNetworkName());
+  store.dispatch(syncAccountAddress());
 
   setInterval(async () => {
-    store.dispatch(updateItems());
-    store.dispatch(updateRequests());
+    store.dispatch(syncItems());
+    store.dispatch(syncRequests());
   }, 2000);
 
   const reactRootEl = document.getElementById('react-root');

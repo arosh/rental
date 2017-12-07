@@ -8,7 +8,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import App from './components/App';
 import createStore from './createStore';
-import { setupWeb3 } from './infra/ethereum';
+import { setupWeb3, getBlockNumber } from './infra/ethereum';
 import {
   syncNetworkName,
   syncAccountAddress,
@@ -29,9 +29,15 @@ window.addEventListener('load', async () => {
   store.dispatch(syncNetworkName());
   store.dispatch(syncAccountAddress());
 
+  let blockNumber = NaN;
+
   setInterval(async () => {
-    store.dispatch(syncItems());
-    store.dispatch(syncRequests());
+    const newBlockNumber = await getBlockNumber();
+    if (newBlockNumber !== blockNumber) {
+      blockNumber = newBlockNumber;
+      store.dispatch(syncItems());
+      store.dispatch(syncRequests());
+    }
   }, 2000);
 
   const reactRootEl = document.getElementById('react-root');

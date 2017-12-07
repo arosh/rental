@@ -12,9 +12,21 @@ export function setupWeb3() {
   }
 }
 
+export function getBlockNumber(): Promise<number> {
+  return new Promise((resolve, reject) => {
+    window.web3.eth.getBlockNumber((err, blockNumber) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(blockNumber);
+    });
+  });
+}
+
 export async function getAccount(): Promise<string> {
   return new Promise((resolve, reject) => {
-    window.web3.eth.getAccounts(async (err, accounts) => {
+    window.web3.eth.getAccounts((err, accounts) => {
       if (err) {
         reject(err);
         return;

@@ -20,13 +20,14 @@
     "flow-bin": "^0.60.1",
     "gh-pages": "^1.1.0",
     "prettier": "^1.9.1",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "source-map-explorer": "^1.5.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
+    "analyze": "yarn build && source-map-explorer build/static/js/main.*",
+    "deploy": "yarn build && gh-pages -d build",
     "format": "prettier --write \"src/**/*.js\""
   },
   "homepage": "https://arosh.github.io/rental/"

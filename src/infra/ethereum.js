@@ -304,5 +304,5 @@ export async function acceptReturning(
 }
 
 export function isAddress(s: string): boolean {
-  return /^0x[0-9a-f]{40}$/.test(s);
+  return window.web3.isAddress(s);
 }

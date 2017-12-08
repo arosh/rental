@@ -22,14 +22,17 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
       alert('Enter the fee field.');
       return;
     }
-    if (theUnit === '') {
+    if (['ether', 'gwei', 'wei'].includes(theUnit) === false) {
       alert('Enter the unit field.');
+      return;
     }
     if (theStart === '') {
       alert('Enter the start date field.');
+      return;
     }
     if (theEnd === '') {
       alert('Enter the end date field.');
+      return;
     }
     this.props.sendRequest({
       itemId: this.props.item.itemId,

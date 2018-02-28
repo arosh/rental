@@ -1,10 +1,7 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 import ItemCard from './ItemCard';
 import type { Item, SendRequestArgs } from '../types';
-import { sendRequest } from '../reducer';
-import type { State } from '../reducer';
 
 type ItemListProps = {
   items: Item[],
@@ -12,7 +9,7 @@ type ItemListProps = {
   account: string,
 };
 
-export const ItemList = (props: ItemListProps) => (
+export default (props: ItemListProps) => (
   <div className="row">
     {props.items
       .filter((item: Item) => item.state === 'idle')
@@ -26,13 +23,3 @@ export const ItemList = (props: ItemListProps) => (
       ))}
   </div>
 );
-
-export default connect(
-  (state: State) => ({
-    items: state.items,
-    account: state.account,
-  }),
-  dispatch => ({
-    sendRequest: (args: SendRequestArgs) => dispatch(sendRequest(args)),
-  })
-)(ItemList);

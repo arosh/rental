@@ -1,9 +1,8 @@
 // @flow
 import React from 'react';
 
-import OnLoanCard from './OnLoanCard';
-
 import type { Request } from '../types';
+import OnLoanCard from './OnLoanCard';
 
 type OnLoanListProps = {
   requests: Request[],

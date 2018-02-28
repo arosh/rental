@@ -1,9 +1,8 @@
 // @flow
 import React from 'react';
 
-import RequestCard from './RequestCard';
-
 import type { Request } from '../types';
+import RequestCard from './RequestCard';
 
 type RequestListProps = {
   requests: Request[],

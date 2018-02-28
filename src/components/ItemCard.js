@@ -8,7 +8,7 @@ type ItemCardProp = {
   account: string,
 };
 
-export class ItemCard extends React.Component<ItemCardProp, {}> {
+export default class ItemCard extends React.Component<ItemCardProp, {}> {
   handleClick = () => {
     const theFee = this.refs.theFee.value;
     const theUnit = this.refs.theUnit.value;
@@ -103,5 +103,3 @@ export class ItemCard extends React.Component<ItemCardProp, {}> {
     );
   };
 }
-
-export default ItemCard;

@@ -5,12 +5,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import AddItemForm from '../containers/AddItemForm';
 import ContractDialog from '../containers/ContractDialog';
 import HistoryList from '../containers/HistoryList';
+import ItemList from '../containers/ItemList';
 import MistBalloon from '../containers/MistBalloon';
 import OnLoanList from '../containers/OnLoanList';
 import QueryString from '../containers/QueryString';
 import RequestList from '../containers/RequestList';
 
-import ItemList from '../components/ItemList';
 import Web3Status from '../components/Web3Status';
 
 export const AppComponent = () => (

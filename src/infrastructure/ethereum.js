@@ -90,7 +90,7 @@ function toItemState(state): string {
     case '1':
       return 'busy';
     default:
-      throw new Error('Unknown ItemState (state = ' + state + ')');
+      throw new Error(`Unknown ItemState (state = ${state})`);
   }
 }
 
@@ -106,7 +106,7 @@ function toRequestState(state): string {
     case '3':
       return 'finished';
     default:
-      throw new Error('Unknown RequestState (state = ' + state + ')');
+      throw new Error(`Unknown RequestState (state = ${state})`);
   }
 }
 
@@ -160,7 +160,7 @@ export function getItem(contractAddress: string, index: number): Promise<Item> {
         owner: item[0],
         name: item[1],
         serialNumber: item[2],
-        state: state,
+        state,
       });
     });
   });

@@ -1,6 +1,6 @@
 // @flow
-import * as eth from './infrastructure/ethereum';
 import * as deepEqual from 'deep-equal';
+import * as eth from './infrastructure/ethereum';
 import type { Item, Request, SendRequestArgs } from './types';
 
 type Action = {

@@ -1,7 +1,7 @@
 // @flow
 import { connect } from 'react-redux';
 
-import OnLoanList from '../components/OnLoanCard';
+import OnLoanList from '../components/OnLoanList';
 import { confirmReturn } from '../reducer';
 
 import type { State } from '../reducer';

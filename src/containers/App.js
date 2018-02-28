@@ -13,7 +13,7 @@ import RequestList from '../containers/RequestList';
 
 import Web3Status from '../components/Web3Status';
 
-export const AppComponent = () => (
+export default () => (
   <Router>
     <div className="container">
       <h3>Items</h3>
@@ -30,5 +30,3 @@ export const AppComponent = () => (
     </div>
   </Router>
 );
-
-export default AppComponent;

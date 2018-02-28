@@ -13,16 +13,16 @@ type InputProps = {
 };
 
 class Input extends React.Component<InputProps, {}> {
-  inputRef: ?HTMLInputElement;
   componentDidMount() {
     if (this.inputRef) {
       this.inputRef.focus();
     }
   }
+  inputRef: ?HTMLInputElement;
   render = () => (
     <TextField
       hintText="0x0123456789abcdef0123456789abcdef01234567"
-      fullWidth={true}
+      fullWidth
       value={this.props.contractAddress}
       ref={elem => {
         this.inputRef = elem;
@@ -59,14 +59,10 @@ export default class ContractDialog extends React.Component<
 
   render = () => {
     const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onClick={this.props.onCancel}
-      />,
+      <FlatButton label="Cancel" primary onClick={this.props.onCancel} />,
       <FlatButton
         label="Submit"
-        primary={true}
+        primary
         onClick={this.handleSubmit}
         disabled={!isAddress(this.state.contractAddress)}
       />,
@@ -76,7 +72,7 @@ export default class ContractDialog extends React.Component<
       <Dialog
         title="Enter the contract address"
         actions={actions}
-        modal={true}
+        modal
         open={this.props.open}
       >
         <Input

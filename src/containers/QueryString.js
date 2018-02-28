@@ -13,6 +13,14 @@ type QueryStringProps = {
 };
 
 class QueryString extends React.Component<QueryStringProps, {}> {
+  componentWillMount() {
+    this.dispatchParams(this.props.location.search);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      this.dispatchParams(nextProps.location.search);
+    }
+  }
   dispatchParams = (searchString: string) => {
     const params = new URLSearchParams(searchString);
     const addr = params.get('addr');
@@ -22,14 +30,6 @@ class QueryString extends React.Component<QueryStringProps, {}> {
       this.props.openContractAddressDialog();
     }
   };
-  componentWillMount() {
-    this.dispatchParams(this.props.location.search);
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location !== this.props.location) {
-      this.dispatchParams(nextProps.location.search);
-    }
-  }
   render = () => null;
 }
 

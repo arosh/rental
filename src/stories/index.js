@@ -45,7 +45,7 @@ storiesOf('ContractDialog', module)
   .addDecorator(Decorator)
   .add('default', () => (
     <ContractDialog
-      open={true}
+      open
       onSubmit={action('onSubmit')}
       onCancel={action('onCancel')}
     />

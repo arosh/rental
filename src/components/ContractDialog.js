@@ -9,7 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
 import { toggleContractAddressDialog } from '../reducer';
-import { isAddress } from '../infra/ethereum';
+import { isAddress } from '../infrastructure/ethereum';
 import type { State } from '../reducer';
 
 type InputProps = {

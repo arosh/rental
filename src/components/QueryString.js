@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { setContractAddress, toggleContractAddressDialog } from '../reducer';
-import { isAddress } from '../infra/ethereum';
+import { isAddress } from '../infrastructure/ethereum';
 
 type QueryStringProps = {
   location: any,

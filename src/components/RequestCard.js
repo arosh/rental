@@ -9,7 +9,7 @@ type RequestCardProps = {
   onCancel: (requestId: number) => void,
 };
 
-export const RequestCard = (props: RequestCardProps) => (
+export default (props: RequestCardProps) => (
   <div className="col-lg-4 col-md-6 col-xs-12 pb-3">
     <div className="card">
       <div className="card-body">
@@ -50,5 +50,3 @@ export const RequestCard = (props: RequestCardProps) => (
     </div>
   </div>
 );
-
-export default RequestCard;

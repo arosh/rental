@@ -6,11 +6,11 @@ import AddItemForm from '../containers/AddItemForm';
 import ContractDialog from '../containers/ContractDialog';
 import HistoryList from '../containers/HistoryList';
 import MistBalloon from '../containers/MistBalloon';
+import OnLoanList from '../containers/OnLoanList';
+import QueryString from '../containers/QueryString';
+import RequestList from '../containers/RequestList';
 
 import ItemList from '../components/ItemList';
-import OnLoanList from '../components/OnLoanList';
-import QueryString from '../components/QueryString';
-import RequestList from '../components/RequestList';
 import Web3Status from '../components/Web3Status';
 
 export const AppComponent = () => (

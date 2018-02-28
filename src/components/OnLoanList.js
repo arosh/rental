@@ -1,12 +1,9 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
 
 import OnLoanCard from './OnLoanCard';
-import { confirmReturn } from '../reducer';
 
 import type { Request } from '../types';
-import type { State } from '../reducer';
 
 type OnLoanListProps = {
   requests: Request[],
@@ -14,7 +11,7 @@ type OnLoanListProps = {
   onConfirmReturn: (requestId: number) => void,
 };
 
-export const OnLoanList = (props: OnLoanListProps) => {
+export default (props: OnLoanListProps) => {
   const rows = props.requests.filter(req => req.state === 'accepted');
   return (
     <div>
@@ -32,13 +29,3 @@ export const OnLoanList = (props: OnLoanListProps) => {
     </div>
   );
 };
-
-export default connect(
-  (state: State) => ({
-    requests: state.requests,
-    account: state.account,
-  }),
-  dispatch => ({
-    onConfirmReturn: (requestId: number) => dispatch(confirmReturn(requestId)),
-  })
-)(OnLoanList);

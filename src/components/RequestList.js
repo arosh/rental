@@ -25,7 +25,7 @@ export const RequestList = (props: RequestListProps) => {
           <RequestCard
             key={req.requestId}
             request={req}
-            account={props.account}
+            userAddress={props.account}
             onAccept={props.onAccept}
             onCancel={props.onCancel}
           />

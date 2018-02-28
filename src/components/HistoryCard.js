@@ -20,9 +20,9 @@ export const HistoryCard = ({ request }: HistoryCardProps) => (
         <h4 className="card-title">{request.itemName}</h4>
         <dl>
           <dt>Owner</dt>
-          <dd>{request.owner}</dd>
+          <dd>{request.ownerAddress}</dd>
           <dt>Client</dt>
-          <dd>{request.client}</dd>
+          <dd>{request.clientAddress}</dd>
           <dt>S/N</dt>
           <dd>{request.serialNumber}</dd>
           <dt>Fee</dt>

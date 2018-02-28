@@ -4,7 +4,7 @@ import type { Request } from '../types';
 
 type RequestCardProps = {
   request: Request,
-  account: string,
+  userAddress: string,
   onAccept: (requestId: number) => void,
   onCancel: (requestId: number) => void,
 };
@@ -16,9 +16,9 @@ export const RequestCard = (props: RequestCardProps) => (
         <h4 className="card-title">{props.request.itemName}</h4>
         <dl>
           <dt>Owner</dt>
-          <dd>{props.request.owner}</dd>
+          <dd>{props.request.ownerAddress}</dd>
           <dt>Client</dt>
-          <dd>{props.request.client}</dd>
+          <dd>{props.request.clientAddress}</dd>
           <dt>S/N</dt>
           <dd>{props.request.serialNumber}</dd>
           <dt>Fee</dt>
@@ -28,7 +28,7 @@ export const RequestCard = (props: RequestCardProps) => (
           <dt>End</dt>
           <dd>{props.request.end}</dd>
         </dl>
-        {props.request.owner === props.account && (
+        {props.request.ownerAddress === props.userAddress && (
           <button
             type="button"
             className="btn btn-outline-success"
@@ -37,7 +37,7 @@ export const RequestCard = (props: RequestCardProps) => (
             Accept
           </button>
         )}
-        {props.request.client === props.account && (
+        {props.request.clientAddress === props.userAddress && (
           <button
             type="button"
             className="btn btn-outline-warning"

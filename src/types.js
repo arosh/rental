@@ -17,8 +17,8 @@ export type SendRequestArgs = {
 
 export type Request = {
   requestId: number,
-  client: string,
-  owner: string,
+  clientAddress: string,
+  ownerAddress: string,
   itemId: number,
   itemName: string,
   serialNumber: string,

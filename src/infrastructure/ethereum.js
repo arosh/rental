@@ -229,8 +229,8 @@ export function getRequest(
       const feeEther = window.web3.fromWei(req[2], 'ether').toString(10);
       resolve({
         requestId: index,
-        client: req[0],
-        owner: item.owner,
+        clientAddress: req[0],
+        ownerAddress: item.owner,
         itemId,
         itemName: item.name,
         serialNumber: item.serialNumber,

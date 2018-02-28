@@ -10,23 +10,22 @@
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
     "web3": "<1.0.0"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.3.14",
+    "@storybook/addon-links": "^3.3.14",
+    "@storybook/addons": "^3.3.14",
+    "@storybook/react": "^3.3.14",
+    "babel-core": "^6.26.0",
     "flow-bin": "^0.66.0",
     "gh-pages": "^1.1.0",
     "prettier": "^1.11.0",
     "react-scripts": "1.1.1",
-    "source-map-explorer": "^1.5.0",
-    "@storybook/react": "^3.3.14",
-    "@storybook/addon-actions": "^3.3.14",
-    "@storybook/addon-links": "^3.3.14",
-    "@storybook/addons": "^3.3.14",
-    "babel-core": "^6.26.0"
+    "source-map-explorer": "^1.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

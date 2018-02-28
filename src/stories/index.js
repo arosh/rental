@@ -6,12 +6,18 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
+import * as Web3 from 'web3';
+
 import type { Request } from '../types';
 
+import AddItemForm from '../components/AddItemForm';
+import ContractDialog from '../components/ContractDialog';
 import MistBalloon from '../components/MistBalloon';
 import RequestCard from '../components/RequestCard';
 
 const Decorator = story => <MuiThemeProvider>{story()}</MuiThemeProvider>;
+
+window.web3 = new Web3();
 
 storiesOf('MistBalloon', module)
   .addDecorator(Decorator)
@@ -55,5 +61,19 @@ storiesOf('RequestCard', module)
       userAddress={request.ownerAddress}
       onAccept={action('accept')}
       onCancel={action('cancel')}
+    />
+  ));
+
+storiesOf('AddItemForm', module)
+  .addDecorator(Decorator)
+  .add('default', () => <AddItemForm addItem={action('addItem')} />);
+
+storiesOf('ContractDialog', module)
+  .addDecorator(Decorator)
+  .add('default', () => (
+    <ContractDialog
+      open={true}
+      onSubmit={action('onSubmit')}
+      onCancel={action('onCancel')}
     />
   ));

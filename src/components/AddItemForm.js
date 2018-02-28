@@ -1,7 +1,5 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
-import { addItem } from '../reducer';
 
 type Props = {
   addItem: (itemName: string, serialNumber: string) => void,
@@ -12,7 +10,7 @@ type State = {
   serialNumber: string,
 };
 
-export class AddItemForm extends React.Component<Props, State> {
+export default class AddItemForm extends React.Component<Props, State> {
   state = {
     name: '',
     serialNumber: '',
@@ -59,8 +57,3 @@ export class AddItemForm extends React.Component<Props, State> {
     </form>
   );
 }
-
-export default connect(null, dispatch => ({
-  addItem: (itemName: string, serialNumber) =>
-    dispatch(addItem(itemName, serialNumber)),
-}))(AddItemForm);

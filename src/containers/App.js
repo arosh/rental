@@ -2,15 +2,16 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import AddItemForm from '../components/AddItemForm';
-import ItemList from '../components/ItemList';
-import RequestList from '../components/RequestList';
-import OnLoanList from '../components/OnLoanList';
-import HistoryList from '../components/HistoryList';
-import Web3Status from '../components/Web3Status';
+import AddItemForm from '../containers/AddItemForm';
+import ContractDialog from '../containers/ContractDialog';
 import MistBalloon from '../containers/MistBalloon';
-import ContractDialog from '../components/ContractDialog';
+
+import HistoryList from '../components/HistoryList';
+import ItemList from '../components/ItemList';
+import OnLoanList from '../components/OnLoanList';
 import QueryString from '../components/QueryString';
+import RequestList from '../components/RequestList';
+import Web3Status from '../components/Web3Status';
 
 export const AppComponent = () => (
   <Router>

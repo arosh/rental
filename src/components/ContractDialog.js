@@ -1,16 +1,11 @@
 // @flow
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-import { toggleContractAddressDialog } from '../reducer';
 import { isAddress } from '../infrastructure/ethereum';
-import type { State } from '../reducer';
 
 type InputProps = {
   contractAddress: string,
@@ -18,15 +13,20 @@ type InputProps = {
 };
 
 class Input extends React.Component<InputProps, {}> {
+  inputRef: ?HTMLInputElement;
   componentDidMount() {
-    this.refs.theInput.focus();
+    if (this.inputRef) {
+      this.inputRef.focus();
+    }
   }
   render = () => (
     <TextField
       hintText="0x0123456789abcdef0123456789abcdef01234567"
       fullWidth={true}
       value={this.props.contractAddress}
-      ref="theInput"
+      ref={elem => {
+        this.inputRef = elem;
+      }}
       onChange={e => this.props.onChange(e.target.value)}
     />
   );
@@ -35,14 +35,14 @@ class Input extends React.Component<InputProps, {}> {
 type ContractDialogProps = {
   open: boolean,
   onSubmit: (contractAddress: string) => void,
-  closeDialog: () => void,
+  onCancel: () => void,
 };
 
 type ContractDialogState = {
   contractAddress: string,
 };
 
-class ContractDialog extends React.Component<
+export default class ContractDialog extends React.Component<
   ContractDialogProps,
   ContractDialogState
 > {
@@ -50,7 +50,7 @@ class ContractDialog extends React.Component<
     contractAddress: '',
   };
 
-  onClick = () => {
+  handleSubmit = () => {
     this.props.onSubmit(this.state.contractAddress);
     this.setState({
       contractAddress: '',
@@ -62,12 +62,12 @@ class ContractDialog extends React.Component<
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={this.props.closeDialog}
+        onClick={this.props.onCancel}
       />,
       <FlatButton
         label="Submit"
         primary={true}
-        onClick={this.onClick}
+        onClick={this.handleSubmit}
         disabled={!isAddress(this.state.contractAddress)}
       />,
     ];
@@ -87,26 +87,3 @@ class ContractDialog extends React.Component<
     );
   };
 }
-
-export default compose(
-  withRouter,
-  connect(
-    (state: State) => ({
-      open: state.contractAddressDialogOpen,
-    }),
-    (dispatch, ownProps) => ({
-      onSubmit: (contractAddress: string) => {
-        const { location, history } = ownProps;
-        const params = new URLSearchParams(location.search);
-        params.set('addr', contractAddress);
-        history.push({
-          search: params.toString(),
-        });
-        dispatch(toggleContractAddressDialog(false));
-      },
-      closeDialog: () => {
-        dispatch(toggleContractAddressDialog(false));
-      },
-    })
-  )
-)(ContractDialog);

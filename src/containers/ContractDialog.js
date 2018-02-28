@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 
+import ContractDialog from '../components/ContractDialog';
 import type { State } from '../reducer';
 import { toggleContractAddressDialog } from '../reducer';
-import ContractDialog from '../components/ContractDialog';
 
 export default compose(
   withRouter,

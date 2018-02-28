@@ -1,5 +1,6 @@
 // @flow
 import { connect } from 'react-redux';
+
 import ItemList from '../components/ItemList';
 import type { SendRequestArgs } from '../types';
 import { sendRequest } from '../reducer';

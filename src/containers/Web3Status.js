@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Web3Status from '../components/Web3Status';
 import type { State } from '../reducer';
-
 import {
   syncNetworkName,
   syncAccountAddress,

@@ -2,9 +2,8 @@
 import { connect } from 'react-redux';
 
 import OnLoanList from '../components/OnLoanList';
-import { confirmReturn } from '../reducer';
-
 import type { State } from '../reducer';
+import { confirmReturn } from '../reducer';
 
 export default connect(
   (state: State) => ({

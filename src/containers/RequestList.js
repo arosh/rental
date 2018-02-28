@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 
 import RequestList from '../components/RequestList';
-
 import type { State } from '../reducer';
 import { acceptRequest, cancelRequest } from '../reducer';
 

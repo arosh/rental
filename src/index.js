@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import App from './components/App';
+import App from './containers/App';
 import createStore from './createStore';
 import { setupWeb3, getBlockNumber } from './infrastructure/ethereum';
 import {

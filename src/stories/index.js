@@ -1,13 +1,16 @@
+// @flow
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
-import { Button, Welcome } from '@storybook/react/demo';
+import MistBalloon from '../components/MistBalloon';
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+const Decorator = story => <MuiThemeProvider>{story()}</MuiThemeProvider>;
 
-storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
-  .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
+storiesOf('MistBalloon', module)
+  .addDecorator(Decorator)
+  .add('display', () => <MistBalloon display />)
+  .add('none', () => <MistBalloon display={false} />);

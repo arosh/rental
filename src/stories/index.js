@@ -14,6 +14,7 @@ import ContractDialog from '../components/ContractDialog';
 import HistoryCard from '../components/HistoryCard';
 import MistBalloon from '../components/MistBalloon';
 import RequestCard from '../components/RequestCard';
+import Web3Status from '../components/Web3Status';
 
 const Decorator = story => <MuiThemeProvider>{story()}</MuiThemeProvider>;
 
@@ -81,3 +82,17 @@ storiesOf('RequestCard', module)
 storiesOf('HistoryCard', module)
   .addDecorator(Decorator)
   .add('default', () => <HistoryCard history={request} />);
+
+storiesOf('Web3Status', module)
+  .addDecorator(Decorator)
+  .add('default', () => (
+    <Web3Status
+      isConnected
+      network="Ropsten"
+      account={request.ownerAddress}
+      contractAddress={request.clientAddress}
+      syncNetworkName={action('syncNetworkName')}
+      openContractAddressDialog={action('openContractAddressDialog')}
+      syncAccountAddress={action('syncAccountAddress')}
+    />
+  ));

@@ -10,8 +10,7 @@ import MistBalloon from '../containers/MistBalloon';
 import OnLoanList from '../containers/OnLoanList';
 import QueryString from '../containers/QueryString';
 import RequestList from '../containers/RequestList';
-
-import Web3Status from '../components/Web3Status';
+import Web3Status from '../containers/Web3Status';
 
 export default () => (
   <Router>

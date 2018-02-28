@@ -4,9 +4,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import AddItemForm from '../containers/AddItemForm';
 import ContractDialog from '../containers/ContractDialog';
+import HistoryList from '../containers/HistoryList';
 import MistBalloon from '../containers/MistBalloon';
 
-import HistoryList from '../components/HistoryList';
 import ItemList from '../components/ItemList';
 import OnLoanList from '../components/OnLoanList';
 import QueryString from '../components/QueryString';

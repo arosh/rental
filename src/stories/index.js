@@ -4,7 +4,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
 
 import * as Web3 from 'web3';
 
@@ -12,6 +11,7 @@ import type { Request } from '../types';
 
 import AddItemForm from '../components/AddItemForm';
 import ContractDialog from '../components/ContractDialog';
+import HistoryCard from '../components/HistoryCard';
 import MistBalloon from '../components/MistBalloon';
 import RequestCard from '../components/RequestCard';
 
@@ -36,6 +36,20 @@ const request: Request = {
   end: '2018-03-01',
   state: 'pending',
 };
+
+storiesOf('AddItemForm', module)
+  .addDecorator(Decorator)
+  .add('default', () => <AddItemForm addItem={action('addItem')} />);
+
+storiesOf('ContractDialog', module)
+  .addDecorator(Decorator)
+  .add('default', () => (
+    <ContractDialog
+      open={true}
+      onSubmit={action('onSubmit')}
+      onCancel={action('onCancel')}
+    />
+  ));
 
 storiesOf('RequestCard', module)
   .addDecorator(Decorator)
@@ -64,16 +78,6 @@ storiesOf('RequestCard', module)
     />
   ));
 
-storiesOf('AddItemForm', module)
+storiesOf('HistoryCard', module)
   .addDecorator(Decorator)
-  .add('default', () => <AddItemForm addItem={action('addItem')} />);
-
-storiesOf('ContractDialog', module)
-  .addDecorator(Decorator)
-  .add('default', () => (
-    <ContractDialog
-      open={true}
-      onSubmit={action('onSubmit')}
-      onCancel={action('onCancel')}
-    />
-  ));
+  .add('default', () => <HistoryCard history={request} />);

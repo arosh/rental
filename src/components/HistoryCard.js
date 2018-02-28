@@ -10,33 +10,31 @@ function capitalize(s: string) {
 }
 
 type HistoryCardProps = {
-  request: Request,
+  history: Request,
 };
 
-export const HistoryCard = ({ request }: HistoryCardProps) => (
+export default ({ history }: HistoryCardProps) => (
   <div className="col-lg-4 col-md-6 col-xs-12 pb-3">
     <div className="card">
       <div className="card-body">
-        <h4 className="card-title">{request.itemName}</h4>
+        <h4 className="card-title">{history.itemName}</h4>
         <dl>
           <dt>Owner</dt>
-          <dd>{request.ownerAddress}</dd>
+          <dd>{history.ownerAddress}</dd>
           <dt>Client</dt>
-          <dd>{request.clientAddress}</dd>
+          <dd>{history.clientAddress}</dd>
           <dt>S/N</dt>
-          <dd>{request.serialNumber}</dd>
+          <dd>{history.serialNumber}</dd>
           <dt>Fee</dt>
-          <dd>{request.feeEther} </dd>
+          <dd>{history.feeEther} </dd>
           <dt>Start</dt>
-          <dd>{request.start}</dd>
+          <dd>{history.start}</dd>
           <dt>End</dt>
-          <dd>{request.end}</dd>
+          <dd>{history.end}</dd>
           <dt>Status</dt>
-          <dd>{capitalize(request.state)}</dd>
+          <dd>{capitalize(history.state)}</dd>
         </dl>
       </div>
     </div>
   </div>
 );
-
-export default HistoryCard;
